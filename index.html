@@ -3,30 +3,53 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Ngopag Slur</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1 id="h1">OAKOAKWOAKWOKAOWK</h1>
-    <h2>aowkaokwoawokaow</h2>
-    <ul>
-      <li>item 1</li>
-      <li>item 2</li>
-      <li>item 3</li>
-      <li>item 4</li>
-      <li>item 5</li>
-    </ul>
-    <ol>
-      <li>first</li>
-      <li>second</li>
-      <li>third</li>
-      <li>fourth</li>
-      <li>fifth</li>
-    </ol>
-    <a href="www.google.com">Gulu gulu</a>
-    <img
-      src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d"
-      alt="a random image from unsplash"
-    />
+    <!-- Navbar start -->
+    <nav class="navbar">
+      <a href="#" class="logo">Ngopag.<span>Slur</span></a>
+
+      <div class="navbar-nav">
+        <a href="#">Home</a>
+        <a href="#about">About</a>
+        <a href="#menu">Menu</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="navbar-extra">
+        <a href="#" id="search"><i data-feather="search"></i></a>
+        <a href="#" id="cart"><i data-feather="shopping-cart"></i></a>
+        <a href="#" id="menu"><i data-feather="menu"></i></a>
+      </div>
+    </nav>
+    <!-- Navbar end -->
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+      <main class="content">
+        <h1>Bangun Pagi Gosok Gigi <span>Ngopi Pagi</span></h1>
+        <p>Lorem ipsum dolor dolor mashokkk</p>
+        <a href="#" class="cta">Beli Sekarang!!</a>
+      </main>
+    </section>
+    <!-- Hero Section -->
+
+    <script>
+      feather.replace();
+    </script>
+    <!-- javascript -->
     <script src="script.js"></script>
   </body>
 </html>
