@@ -29,6 +29,10 @@ Tujuan proyek ini adalah membangun aplikasi berbasis web untuk mengelola stok ba
     cd DesainBigData
     ```
 
+### SEBELUM NGLANJUTIN PROJECT PASTIIN DULU KALO PROJECT DI LAPTOP MASING MASING UDAH VERSI TERBARU DAN JANGAN LUPA BIKIN FOLDER BACKUP YEAHH
+
+Caranya pake `git pull origin main` kalo mau nyesuaiin sama branch main
+
 ## 🧭 Panduan untuk Edit Tampilan (HTML & CSS)
 
 Agar tidak bingung saat ingin mengedit tampilan web:
@@ -38,6 +42,7 @@ Agar tidak bingung saat ingin mengedit tampilan web:
 -   Buka folder: resources/views
 -   Di dalam folder itu, ada file `landing.blade.php` itu untuk landing pagenya
 -   Untuk CSS nya ada di dalam folder resources/css
+
     Enjoy Projekan Guyssss untuk yang lainnya kita nunggu database nya jadi dulu yaaa hehehhe
 
 ## About Laravel
