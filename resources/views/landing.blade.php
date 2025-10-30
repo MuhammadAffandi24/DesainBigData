@@ -14,10 +14,12 @@
   <!-- NAVBAR -->
   <header class="navbar">
     <div class="container">
-      <div class="logo">
-        <img src="{{ asset('assets/navbar&footer.svg') }}" alt="Logo STOKIFY" class="logo-icon">
-        <h1>STOKIFY</h1>
-      </div>
+        <div class="logo">
+            <a href="#home" class="logo-link">
+            <img src="{{ asset('assets/navbar&footer.svg') }}" alt="Logo STOKIFY" class="logo-icon">
+            <h1>STOKIFY</h1>
+            </a>
+        </div>
       <nav>
         <a href="#home">Home</a>
         <a href="#fitur">Fitur</a>

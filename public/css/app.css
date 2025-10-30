@@ -70,19 +70,19 @@ body {
     justify-content: space-between;
     align-items: center;
 }
-.logo {
+.logo-link {
     display: flex;
     align-items: center;
     gap: 14px;
+    text-decoration: none;
+    color: inherit;
 }
-.logo-icon {
-    width: 60px;
-    height: auto;
+
+.logo-link:hover {
+    opacity: 0.8;
+    transition: 0.2s;
 }
-.logo h1 {
-    font-size: 2rem;
-    font-weight: 700;
-}
+
 .navbar nav a {
     margin: 0 1.5rem;
     color: #e1d4c2;
@@ -117,7 +117,7 @@ body {
     min-width: 350px;
     max-width: 450px;
     height: auto;
-    animation: float 4s ease-in-out infinite;
+    animation: float 0.1s ease-in-out infinite;
 }
 
 .hero-text {
