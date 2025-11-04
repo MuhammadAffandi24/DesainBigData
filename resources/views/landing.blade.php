@@ -26,8 +26,12 @@
         <a href="#cara">Cara Kerja</a>
       </nav>
       <div class="actions">
-        <button class="btn light">Masuk</button>
-        <button class="btn dark">Daftar</button>
+        <a href="{{ route('login.form') }}">
+          <button class="btn dark">Masuk</button>
+        </a>
+        <a href="{{ route('register') }}">
+          <button class="btn dark">Daftar</button>
+        </a>
       </div>
     </div>
   </header>
@@ -42,8 +46,8 @@
         Simple, cepat, no drama pake <strong>STOKIFY</strong>.
       </p>
       <div class="cta">
-        <button class="btn dark">Coba Gratis</button>
-        <button class="btn light">Daftar Sekarang</button>
+        <a href="{{ route('register') }}" class="btn dark">Coba Gratis</a>
+        <a href="{{ route('register') }}" class="btn light">Daftar Sekarang</a>
       </div>
     </div>
   </section>
