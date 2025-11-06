@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\GudangController;
 
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register']);
@@ -12,4 +14,18 @@ Route::prefix('users')->group(function () {
         Route::put('/role/{id}', [UserController::class, 'updateRole']);
         Route::get('/', [UserController::class, 'index']);
     });
+});
+
+Route::prefix('barang')->group(function () {
+    Route::get('/', [BarangController::class, 'index']);
+    Route::post('/', [BarangController::class, 'store']);
+    Route::get('/{id}', [BarangController::class, 'show']);
+    Route::put('/{id}', [BarangController::class, 'update']);
+    Route::delete('/{id}', [BarangController::class, 'destroy']);
+});
+
+Route::prefix('gudang')->group(function () {
+    Route::get('/', [GudangController::class, 'index']);
+    Route::post('/', [GudangController::class, 'store']);
+    Route::delete('/{id}', [GudangController::class, 'destroy']);
 });
