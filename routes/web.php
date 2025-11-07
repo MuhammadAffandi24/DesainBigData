@@ -38,3 +38,7 @@ Route::get('/register', function () {
 })->name('register');
 
 Route::post('/register', [UserController::class, 'register'])->name('register.post');
+
+Route::get('/whoami', function () {
+    return ['auth_id' => Auth::id(), 'logged_in' => Auth::check()];
+});

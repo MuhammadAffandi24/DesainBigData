@@ -5,9 +5,10 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\GudangController;
 
+
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('register.post');
-    Route::post('/login', [UserController::class, 'login'])->name('login.post');
+    Route::post('/login',    [UserController::class, 'login'])->name('login.post');
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::post('/logout', [UserController::class, 'logout'])->name('logout.post');
@@ -24,8 +25,8 @@ Route::prefix('barang')->group(function () {
     Route::delete('/{id}', [BarangController::class, 'destroy']);
 });
 
-Route::prefix('gudang')->group(function () {
+Route::prefix('gudang')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [GudangController::class, 'index']);
-    Route::post('/', [GudangController::class, 'store']);
+    Route::post('/', [GudangController::class, 'store']);   
     Route::delete('/{id}', [GudangController::class, 'destroy']);
 });
