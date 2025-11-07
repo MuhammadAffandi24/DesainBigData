@@ -1,3 +1,11 @@
+/* 
+    Kesepakatan bersama editor notifikasi:
+    Judul 20px, 700
+    Content 12px, 300
+    Tombol 14px, 600
+*/
+
+
 /* Mengatur posisi pop up */
 .stock-low-popup {
     position: fixed;
