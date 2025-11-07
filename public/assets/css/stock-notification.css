@@ -1,3 +1,4 @@
+/* Mengatur posisi pop up */
 .stock-low-popup {
     position: fixed;
     top: 50%;
@@ -11,49 +12,70 @@
     padding: 20px;
 }
 
+/* Mengatur isi pop up */
 .stock-low-content {
-    color: white;
+    /* Warna Teks */
+    color: #E4D8C8;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
 }
 
+/* Judul */
 .stock-low-title {
     text-align: center;
-    color: #ff6b6b;
-    font-size: 24px;
+    color: #E4D8C8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    font-style: normal; /* Ini harusnya ExtraBold*/
+    line-height: 100%;
+    letter-spacing: 0%;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
+/* Container untuk list produk yang stoknya hampir habis*/
 .stock-low-items {
     margin-bottom: 20px;
 }
 
+/* Setiap baris produk */
 .stock-low-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: right;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 400;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: 0;
 }
 
+/* nama + sisa stok */
 .stock-info {
-    font-size: 16px;
-    color: #fff;
+    font-size: 24px;
+    color: #E4D8C8;
 }
 
+/* Tombol "Tambah ke Daftar Barang" */
 .add-to-cart-btn {
-    background-color: #4CAF50;
-    color: white;
+    background-color: #E4D8C8;
+    color: #291C0E;
     border: none;
+    width: 192px;
+    height: 86px;
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
 }
 
+/* Background */
 .add-to-cart-btn:hover {
     background-color: #45a049;
 }
 
+/* Tombol "Buka Daftar Belanja" */
 .open-cart-btn {
     display: block;
     width: 100%;
