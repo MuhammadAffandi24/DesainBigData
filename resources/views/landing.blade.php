@@ -177,7 +177,9 @@
       <p>Gratis daftar, hemat waktu, dan lebih teratur mulai hari ini.</p>
     </div>
     <div class="cta-right">
+      <a href="{{ route('register') }}">
       <button class="btn light big">DAFTAR SEKARANG</button>
+      </a>
       <button class="btn dark big">COBA GRATIS</button>
     </div>
   </section>
