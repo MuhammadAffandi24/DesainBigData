@@ -5,7 +5,15 @@
     Judul 20px, 700
     Content 12px, 300
     Tombol 14px, 600
+
+    #291C0E --> gelap
+    #E4D8C8 --> terang
+
+
 */
+
+/* Import Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 
 /* Mengatur posisi pop up */
