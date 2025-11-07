@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function() {
+gitdocument.addEventListener('DOMContentLoaded', function() {
     // Listen for stock low notifications
     window.Echo?.private(`App.Models.User.${userId}`)
         .notification((notification) => {
