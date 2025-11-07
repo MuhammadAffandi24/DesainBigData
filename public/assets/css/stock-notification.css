@@ -1,3 +1,5 @@
+/* NOTIFIKASI STOK HAMPIR HABIS */
+
 /* 
     Kesepakatan bersama editor notifikasi:
     Judul 20px, 700
@@ -15,7 +17,7 @@
     width: 932px;
     background-color: #291c0e;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     padding: 20px;
 }
@@ -25,7 +27,7 @@
     /* Warna Teks */
     color: #E4D8C8;
     font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-weight: 400;
+    font-weight: 300;
 }
 
 /* Judul */
@@ -33,8 +35,8 @@
     text-align: center;
     color: #E4D8C8;
     font-family: 'Poppins', sans-serif;
-    font-size: 36px;
-    font-weight: 800;
+    font-size: 20px;
+    font-weight: 700;
     font-style: normal; /* Ini harusnya ExtraBold*/
     line-height: 100%;
     letter-spacing: 0%;
@@ -52,16 +54,16 @@
     justify-content: space-between;
     align-items: right;
     padding: 10px 0;
-    font-weight: 400;
+    font-weight: 300;
     font-style: normal;
-    font-size: 24px;
+    font-size: 12px;
     line-height: 100%;
     letter-spacing: 0;
 }
 
 /* nama + sisa stok */
 .stock-info {
-    font-size: 24px;
+    font-size: 12px;
     color: #E4D8C8;
 }
 
