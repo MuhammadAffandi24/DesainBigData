@@ -57,7 +57,7 @@
     color: #E4D8C8;
 }
 
-/* Tombol "Tambah ke Daftar Barang" */
+/* Tombol "Tambah ke Daftar Belanja" */
 .add-to-cart-btn {
     background-color: #E4D8C8;
     color: #291C0E;
@@ -72,15 +72,15 @@
 
 /* Background */
 .add-to-cart-btn:hover {
-    background-color: #45a049;
+    background-color: #291C0E;
 }
 
 /* Tombol "Buka Daftar Belanja" */
 .open-cart-btn {
     display: block;
     width: 100%;
-    background-color: #007bff;
-    color: white;
+    background-color: #291C0E;
+    color: #E4D8C8;
     border: none;
     padding: 12px;
     border-radius: 4px;
