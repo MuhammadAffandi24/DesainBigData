@@ -97,6 +97,10 @@
     margin-top: 20px;
     cursor: pointer;
     transition: background-color 0.3s;
+
+    font-weight: 600;
+    font-style: normal;
+    font-size: 14px;
 }
 
 .open-cart-btn:hover {
