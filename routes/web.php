@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\DaftarBelanjaController;
 
 # Landing Page
 Route::get('/', function () {
@@ -42,3 +44,7 @@ Route::post('/register', [UserController::class, 'register'])->name('register.po
 Route::get('/whoami', function () {
     return ['auth_id' => Auth::id(), 'logged_in' => Auth::check()];
 });
+
+# barang
+Route::post('/delete_barang', [BarangController::class, 'destroy'])->name('barang.destroy');
+Route::post('/belanja/delete', [DaftarBelanjaController::class, 'destroy'])->name('belanja.destroy');

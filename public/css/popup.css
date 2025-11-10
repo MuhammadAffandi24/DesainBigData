@@ -1,0 +1,93 @@
+/* ============================================================
+   DELETE BARANG
+============================================================ */
+/* Overlay gelap */
+.overlay-delete {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Popup */
+.delete-barang {
+  position: relative;
+  width: 350px;
+  height: auto;
+  background-color: #291c0e;
+  border: 1px solid #6e473b;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  text-align: center;
+  color: #f8e8d0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Tombol close */
+.material-symbols {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+/* Title */
+.delete-barang .title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+/* Message */
+.delete-barang .message {
+  font-size: 14px;
+  font-weight: 200;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.delete-barang .item-name {
+  font-weight: 700;
+}
+
+/* Tombol */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn-cancel, .btn-delete {
+  padding: 7px 33px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  text-decoration: none;
+}
+
+.btn-cancel {
+  background-color: #f8e8d0;
+  color: #291c0e;
+}
+
+.btn-delete {
+  background-color: #f8e8d0;
+  color: #c12020;
+}
+
+.btn-cancel:hover {
+  background-color: #e0cfb5;
+}
+
+.btn-delete:hover {
+  background-color: #e0cfb5;
+}
