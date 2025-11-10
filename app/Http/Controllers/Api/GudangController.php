@@ -10,27 +10,50 @@ use Illuminate\Validation\Rule;
 
 class GudangController extends Controller
 {
-    // GET /api/gudang
+    // 🔹 GET /api/gudang → tampilkan semua gudang milik user login
     public function index()
     {
-        // hanya tampilkan gudang milik user login
-        $data = Gudang::where('user_id', Auth::id())->get();
-
-        return response()->json([
-            'message' => 'Daftar Gudang',
-            'data'    => $data
-        ], 200);
-    }
-
-    // POST /api/gudang
-    public function store(Request $request)
-    {
-        $userId = Auth::id(); // otomatis dari token Sanctum
+        $userId = Auth::id();
         if (!$userId) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        // Validasi: nama_gudang hanya unik dalam scope user_id
+        $data = Gudang::where('user_id', $userId)->get();
+
+        return response()->json([
+            'message' => 'Daftar Gudang milik user login',
+            'data'    => $data
+        ], 200);
+    }
+
+    // 🔹 GET /api/gudang/{id} → tampilkan detail gudang tertentu
+    public function show($id)
+    {
+        $userId = Auth::id();
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $gudang = Gudang::where('user_id', $userId)->find($id);
+
+        if (!$gudang) {
+            return response()->json(['message' => 'Gudang tidak ditemukan'], 404);
+        }
+
+        return response()->json([
+            'message' => 'Detail Gudang',
+            'data'    => $gudang
+        ], 200);
+    }
+
+    // 🔹 POST /api/gudang → tambah gudang baru
+    public function store(Request $request)
+    {
+        $userId = Auth::id();
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
         $request->validate([
             'nama_gudang' => [
                 'required',
@@ -39,14 +62,13 @@ class GudangController extends Controller
                 Rule::unique('gudang', 'nama_gudang')->where(fn ($q) => $q->where('user_id', $userId))
             ],
             'lokasi' => 'required|string|max:100',
-            'status' => 'required|string|max:50',
         ]);
 
         $gudang = Gudang::create([
             'user_id'     => $userId,
             'nama_gudang' => $request->nama_gudang,
             'lokasi'      => $request->lokasi,
-            'status'      => $request->status,
+            'status'      => 'Aktif', // otomatis aktif
             'joined_date' => now(),
         ]);
 
@@ -56,10 +78,15 @@ class GudangController extends Controller
         ], 201);
     }
 
-    // DELETE /api/gudang/{id}
+    // 🔹 DELETE /api/gudang/{id} → hapus gudang milik user login
     public function destroy($id)
     {
-        $gudang = Gudang::where('user_id', Auth::id())->find($id);
+        $userId = Auth::id();
+        if (!$userId) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $gudang = Gudang::where('user_id', $userId)->find($id);
         if (!$gudang) {
             return response()->json(['message' => 'Gudang tidak ditemukan'], 404);
         }

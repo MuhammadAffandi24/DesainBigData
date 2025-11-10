@@ -27,6 +27,7 @@ Route::prefix('barang')->group(function () {
 
 Route::prefix('gudang')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [GudangController::class, 'index']);
-    Route::post('/', [GudangController::class, 'store']);   
+    Route::get('/{id}', [GudangController::class, 'show']);
+    Route::post('/', [GudangController::class, 'store']);
     Route::delete('/{id}', [GudangController::class, 'destroy']);
 });
