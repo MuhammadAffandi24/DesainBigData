@@ -4,8 +4,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\DaftarBelanjaController;
+use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\DaftarBelanjaController;
+
+
 
 # Landing Page
 Route::get('/', function () {

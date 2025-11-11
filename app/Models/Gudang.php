@@ -11,6 +11,8 @@ class Gudang extends Model
 
     protected $table = 'gudang';
     protected $primaryKey = 'gudang_id';
+    public $incrementing = true;
+    protected $keyType = 'int';
     public $timestamps = false;
 
     protected $fillable = [

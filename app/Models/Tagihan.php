@@ -5,26 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Barang extends Model
+class Tagihan extends Model
 {
     use HasFactory;
 
-    protected $table = 'barang';
-    protected $primaryKey = 'barang_id';
+    protected $table = 'tagihan';
+    protected $primaryKey = 'tagihan_id';
     public $incrementing = true;
     protected $keyType = 'int';
     public $timestamps = false;
+
     protected $fillable = [
-        'gudang_id',
-        'nama_barang',
+        'user_id',
+        'nama_tagihan',
         'kategori',
-        'jumlah_barang',
-        'harga_barang',
-        'toko_pembelian'
+        'nominal',
+        'jatuh_tempo',
+        'status_pembayaran'
     ];
 
-    public function gudang()
+    public function user()
     {
-        return $this->belongsTo(Gudang::class, 'gudang_id');
+        return $this->belongsTo(User::class, 'user_id', 'user_id');
     }
 }

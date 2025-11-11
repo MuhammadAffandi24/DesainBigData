@@ -24,3 +24,4 @@ class BarangController extends Controller
         return redirect('/homepage')->with('success', $nama. ' berhasil dihapus dari list Barang');
     }
 }
+

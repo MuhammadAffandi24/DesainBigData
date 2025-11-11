@@ -7,16 +7,24 @@ use Illuminate\Http\Request;
 use App\Models\Barang;
 use App\Models\Gudang;
 use App\Models\DaftarBelanja;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
     // 🔹 GET: Semua Barang
     public function index()
     {
-        $barang = Barang::with('gudang:nama_gudang,gudang_id')->get();
+        $userId = Auth::id();
+
+        // ambil barang hanya dari gudang milik user login
+        $barang = Barang::with('gudang:nama_gudang,gudang_id')
+            ->whereHas('gudang', function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            })
+            ->get();
 
         return response()->json([
-            'message' => 'Daftar Barang',
+            'message' => 'Daftar Barang milik user login',
             'data' => $barang
         ], 200);
     }
@@ -76,8 +84,15 @@ class BarangController extends Controller
 
         $barang->update($request->all());
 
+        // sinkronkan perubahan ke daftar_belanja
+        DaftarBelanja::where('barang_id', $barang->barang_id)->update([
+            'nama_barang' => $barang->nama_barang,
+            'sisa_stok' => $barang->jumlah_barang,
+            'toko_pembelian' => $barang->toko_pembelian
+        ]);
+
         return response()->json([
-            'message' => 'Barang berhasil diperbarui',
+            'message' => 'Barang berhasil diperbarui dan daftar belanja diperbarui juga',
             'data' => $barang
         ], 200);
     }

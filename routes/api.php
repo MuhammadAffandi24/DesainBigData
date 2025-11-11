@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\GudangController;
-
+use App\Http\Controllers\Api\DaftarBelanjaController;
+use App\Http\Controllers\Api\TagihanController;
 
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('register.post');
@@ -30,4 +31,17 @@ Route::prefix('gudang')->middleware('auth:sanctum')->group(function () {
     Route::get('/{id}', [GudangController::class, 'show']);
     Route::post('/', [GudangController::class, 'store']);
     Route::delete('/{id}', [GudangController::class, 'destroy']);
+});
+
+Route::prefix('daftar-belanja')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [DaftarBelanjaController::class, 'index']);
+    Route::post('/', [DaftarBelanjaController::class, 'addToCart']);
+});
+
+Route::prefix('tagihan')->middleware('auth:sanctum')->group(function () {
+    Route::get('/', [TagihanController::class, 'index']);
+    Route::get('/{id}', [TagihanController::class, 'show']);
+    Route::post('/', [TagihanController::class, 'store']);
+    Route::put('/{id}', [TagihanController::class, 'update']);
+    Route::delete('/{id}', [TagihanController::class, 'destroy']);
 });
