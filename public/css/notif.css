@@ -1,13 +1,29 @@
 .notif-sukses {
   position: fixed;
-  top: 50px; 
-  left: 50%; 
+  top: 50px;
+  left: 50%;
   transform: translateX(-50%);
   width: 60%;
-  background-color: #e1d4c2;
-  border: 1px solid #6e473b;
+  background-color: #d4f8d0; /* hijau lembut */
+  border: 1px solid #2c5f2d;
   border-radius: 10px;
-  padding: 16px 16px; 
+  padding: 10px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.notif-error {
+  position: fixed;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  background-color: #f8d0d0; /* merah lembut */
+  border: 1px solid #8c1c1c;
+  border-radius: 10px;
+  padding: 10px 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   z-index: 9999;
   font-family: "Poppins", sans-serif;
@@ -17,37 +33,38 @@
 .notif-title {
   font-weight: bold;
   font-size: 14px;
-  color: #c12020;
   display: block;
   margin-bottom: 6px;
+}
+
+.notif-sukses .notif-title {
+  color: #2c5f2d; /* hijau tua */
+}
+
+.notif-error .notif-title {
+  color: #8c1c1c; /* merah tua */
 }
 
 .notif-message {
   font-size: 12px;
   color: #291c0e;
   margin: 0;
-} 
+}
 
 .notif-close {
   position: absolute;
   top: 10px;
   right: 10px;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes fadeOut {
-  to {
-    opacity: 0;
-  }
+  to { opacity: 0; }
 }

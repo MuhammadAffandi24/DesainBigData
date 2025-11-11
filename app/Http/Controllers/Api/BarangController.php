@@ -101,13 +101,13 @@ class BarangController extends Controller
     public function destroy($id)
     {
         $barang = Barang::find($id);
-        if (!$barang) return response()->json(['message' => 'Barang tidak ditemukan'], 404);
+        if (!$barang) return response()->json(['message' => 'Barang tidak ditemukan 😢'], 404);
 
         // hapus juga dari daftar_belanja
         DaftarBelanja::where('barang_id', $id)->delete();
 
         $barang->delete();
 
-        return response()->json(['message' => 'Barang berhasil dihapus'], 200);
+        return response()->json(['message' => 'Barang berhasil dihapus 😊'], 200);
     }
 }

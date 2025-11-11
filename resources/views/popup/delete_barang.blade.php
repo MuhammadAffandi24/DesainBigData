@@ -1,30 +1,30 @@
-{{-- resources/views/popup/hapus_barang.blade.php --}}
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
-<div class="overlay-delete">
-  <div class="delete-barang">
-    {{-- Tombol close (ikon silang) --}}
-    <img id="close-delete" class="material-symbols" src="{{ asset('assets/material-symbols_close.svg') }}" alt="Close" />
 
-    <div class="delete-content">
-      <div class="title">Hapus Barang</div>
+<div class="overlay-delete" id="overlay-delete" style="display: none;">
+  <div class="delete">
+    {{-- Tombol close --}}
+    <img id="close-delete" class="material-symbols" src="{{ asset('assets/material-symbols_close(2).svg') }}" alt="Close" />
 
-      {{-- Pesan konfirmasi --}}
-      <p class="message">
-        Apakah kamu yakin ingin menghapus barang <br>
-        <span class="item-name">{{ $barang->nama_barang }}</span>?
-      </p>
+    {{-- Konten popup --}}
+    <div class="title">Hapus Barang</div>
 
-      {{-- Form hapus --}}
-      <form method="POST" action="{{ route('barang.destroy') }}">
-        @csrf
-        <input type="hidden" name="id" value="{{ $barang->barang_id }}">
+    <p class="message">
+      Apakah kamu yakin ingin menghapus barang <br>
+      <span class="item-name">{{ $barang->nama_barang }}</span>?
+    </p>
 
-        {{-- Tombol aksi --}}
-        <div class="btn-group">
-          <button type="button" id="cancel-delete" class="btn-cancel">Batal</button>
-          <button type="submit" class="btn-delete">Delete</button>
-        </div>
-      </form>
+    {{-- Tombol aksi --}}
+    <div class="btn-group">
+      <button type="button" id="cancel-delete" class="btn-cancel">Batal</button>
+      <button
+        type="button"
+        class="btn-delete universal-delete"
+        data-id="{{ $barang->barang_id }}"
+        data-url="/api/barang/{{ $barang->barang_id }}"
+        data-label="Barang"
+      >
+        Delete
+      </button>
     </div>
   </div>
 </div>

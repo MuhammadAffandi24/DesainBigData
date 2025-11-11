@@ -7,8 +7,6 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\DaftarBelanjaController;
 
-
-
 # Landing Page
 Route::get('/', function () {
     return view('landing');
@@ -46,7 +44,3 @@ Route::post('/register', [UserController::class, 'register'])->name('register.po
 Route::get('/whoami', function () {
     return ['auth_id' => Auth::id(), 'logged_in' => Auth::check()];
 });
-
-# barang
-Route::post('/delete_barang', [BarangController::class, 'destroy'])->name('barang.destroy');
-Route::post('/belanja/delete', [DaftarBelanjaController::class, 'destroy'])->name('belanja.destroy');

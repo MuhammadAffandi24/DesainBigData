@@ -1,5 +1,5 @@
 /* ============================================================
-   DELETE BARANG
+   DELETE 
 ============================================================ */
 /* Overlay gelap */
 .overlay-delete {
@@ -13,7 +13,7 @@
 }
 
 /* Popup */
-.delete-barang {
+.delete {
   position: relative;
   width: 350px;
   height: auto;
@@ -38,21 +38,21 @@
 }
 
 /* Title */
-.delete-barang .title {
+.delete .title {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 20px;
 }
 
 /* Message */
-.delete-barang .message {
+.delete .message {
   font-size: 14px;
   font-weight: 200;
   margin-bottom: 30px;
   line-height: 1.5;
 }
 
-.delete-barang .item-name {
+.delete .item-name {
   font-weight: 700;
 }
 
@@ -90,4 +90,72 @@
 
 .btn-delete:hover {
   background-color: #e0cfb5;
+}
+
+/* ============================================================
+   DELETE - VERSI TERANG
+============================================================ */
+.delete-light {
+  position: relative;
+  width: 350px;
+  height: auto;
+  background-color: #E1D4C2;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  text-align: center;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+}
+
+.delete-light .title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #291C0E;
+}
+
+.delete-light .message {
+  font-size: 14px;
+  font-weight: 300;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  color: #291C0E;
+}
+
+.delete-light .item-name {
+  font-weight: 700;
+}
+
+.delete-light .btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.delete-light .btn-cancel,
+.delete-light .btn-delete {
+  padding: 7px 33px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+
+.delete-light .btn-cancel {
+  background-color: #291C0E;
+  color: #E1D4C2;
+}
+
+.delete-light .btn-delete {
+  background-color: #291C0E;
+  color: #DF5F5F;
+}
+
+.delete-light .btn-cancel:hover,
+.delete-light .btn-delete:hover {
+  background-color: #352514;
 }
