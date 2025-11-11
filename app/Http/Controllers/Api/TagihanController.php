@@ -99,7 +99,7 @@ class TagihanController extends Controller
             'kategori' => 'sometimes|string|max:50',
             'nominal' => 'sometimes|numeric|min:0',
             'jatuh_tempo' => 'sometimes|date',
-            'status_pembayaran' => 'sometimes|in:Lunas,Belum Lunas,Belum Dibayar, Terlambat',
+            'status_pembayaran' => 'sometimes|in:Lunas,Belum Lunas,Belum Dibayar,Terlambat',
             'tanggal_pembayaran' => 'nullable|date'
         ]);
 
@@ -119,7 +119,7 @@ class TagihanController extends Controller
                 'tanggal' => $request->tanggal_pembayaran
                     ? Carbon::parse($request->tanggal_pembayaran)->toDateString()
                     : Carbon::now()->toDateString(),
-                'status' => 'lunas'
+                'status' => 'Lunas'
             ]);
         }
 

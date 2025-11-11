@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE riwayat_pembayaran ADD CONSTRAINT chk_riwayat_pembayaran_status CHECK (status IN ('Lunas', 'Belum Lunas', 'Belum Dibayar'))");
+        DB::statement("ALTER TABLE riwayat_pembayaran ADD CONSTRAINT chk_riwayat_pembayaran_status CHECK (status IN ('Lunas', 'Belum Lunas', 'Belum Dibayar', 'Terlambat'))");
     }
 
     public function down(): void

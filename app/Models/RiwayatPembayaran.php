@@ -11,6 +11,7 @@ class RiwayatPembayaran extends Model
 
     protected $table = 'riwayat_pembayaran';
     protected $primaryKey = 'pembayaran_id';
+    public $timestamps = false;
     public $incrementing = true;
     protected $keyType = 'int';
 
