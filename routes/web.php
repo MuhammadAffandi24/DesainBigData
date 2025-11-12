@@ -4,8 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Api\UserController;
-use App\Http\Controllers\Api\BarangController;
-use App\Http\Controllers\Api\DaftarBelanjaController;
+use App\Http\Controllers\Api\GudangController;
 
 # Landing Page
 Route::get('/', function () {
@@ -34,13 +33,25 @@ Route::get('/admin/login', function () {
 Route::post('/admin/login', [App\Http\Controllers\Api\UserController::class, 'login'])
     ->name('admin.login.submit');
 
-# Register
+# Register (User)
 Route::get('/register', function () {
-    return view('register');
+    return view('auth.register'); // form register user
 })->name('register');
 
-Route::post('/register', [UserController::class, 'register'])->name('register.post');
+# Register Gudang (hanya untuk user login)
+Route::middleware('auth')->group(function () {
 
-Route::get('/whoami', function () {
-    return ['auth_id' => Auth::id(), 'logged_in' => Auth::check()];
+    // Form registrasi gudang
+    Route::get('/gudang/register', function () {
+        return view('registergudang'); // blade register gudang
+    })->name('gudang.register.form');
+
+    // Proses simpan data gudang
+    Route::post('/gudang/register', [GudangController::class, 'store'])
+        ->name('gudang.register.post');
+
+    // Halaman home (kosong sementara)
+    Route::get('/home', function () {
+        return ''; // kosong dulu biar redirect tidak error
+    })->name('home');
 });
