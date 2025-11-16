@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\BarangController;
 use App\Http\Controllers\Api\GudangController;
 use App\Http\Controllers\Api\DaftarBelanjaController;
 use App\Http\Controllers\Api\TagihanController;
+use App\Http\Controllers\Api\RiwayatPembayaranController;
 
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('register.post');
@@ -44,4 +45,12 @@ Route::prefix('tagihan')->middleware('auth:sanctum')->group(function () {
     Route::post('/', [TagihanController::class, 'store']);
     Route::put('/{id}', [TagihanController::class, 'update']);
     Route::delete('/{id}', [TagihanController::class, 'destroy']);
+});
+
+
+Route::middleware('auth:sanctum')->prefix('riwayat-pembayaran')->group(function () {
+    Route::get('/', [RiwayatPembayaranController::class, 'index']);
+    Route::put('/{id}', [RiwayatPembayaranController::class, 'update']);
+    Route::delete('/{id}', [RiwayatPembayaranController::class, 'destroy']);
+    Route::get('/export/csv', [RiwayatPembayaranController::class, 'exportCsv']);
 });
