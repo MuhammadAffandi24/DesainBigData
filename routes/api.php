@@ -52,5 +52,7 @@ Route::middleware('auth:sanctum')->prefix('riwayat-pembayaran')->group(function 
     Route::get('/', [RiwayatPembayaranController::class, 'index']);
     Route::put('/{id}', [RiwayatPembayaranController::class, 'update']);
     Route::delete('/{id}', [RiwayatPembayaranController::class, 'destroy']);
-    Route::get('/export/csv', [RiwayatPembayaranController::class, 'exportCsv']);
+
+    // 🟢 YANG BENAR: TANPA prefix di dalamnya!
+    Route::get('/export', [RiwayatPembayaranController::class, 'exportCsv']);
 });
