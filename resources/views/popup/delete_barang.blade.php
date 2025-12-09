@@ -9,7 +9,7 @@
     <div class="title">Hapus Barang</div>
 
     <p class="message">
-      Apakah kamu yakin ingin menghapus barang <br>
+      Apakah anda yakin ingin menghapus barang <br>
       <span class="item-name">{{ $barang->nama_barang }}</span>?
     </p>
 

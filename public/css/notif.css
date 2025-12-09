@@ -1,33 +1,21 @@
-.notif-sukses {
+.notif-sukses,
+.notif-error {
   position: fixed;
   top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  background-color: #d4f8d0; /* hijau lembut */
+  right: 20px;              
+  width: 300px;            
+  background-color: #d4f8d0;
   border: 1px solid #2c5f2d;
   border-radius: 10px;
   padding: 10px 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   z-index: 9999;
   font-family: "Poppins", sans-serif;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .notif-error {
-  position: fixed;
-  top: 50px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60%;
-  background-color: #f8d0d0; /* merah lembut */
+  background-color: #f8d0d0;
   border: 1px solid #8c1c1c;
-  border-radius: 10px;
-  padding: 10px 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 9999;
-  font-family: "Poppins", sans-serif;
-  animation: fadeIn 0.3s ease-in-out;
 }
 
 .notif-title {
@@ -38,11 +26,11 @@
 }
 
 .notif-sukses .notif-title {
-  color: #2c5f2d; /* hijau tua */
+  color: #2c5f2d; 
 }
 
 .notif-error .notif-title {
-  color: #8c1c1c; /* merah tua */
+  color: #8c1c1c; 
 }
 
 .notif-message {
