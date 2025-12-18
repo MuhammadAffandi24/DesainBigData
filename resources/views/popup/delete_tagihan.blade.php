@@ -9,7 +9,7 @@
     <div class="title">Hapus Tagihan</div>
 
     <p class="message">
-      Apakah kamu yakin ingin menghapus tagihan <br>
+      Apakah anda yakin ingin menghapus tagihan <br>
       <span class="item-name">{{ $tagihan->nama_tagihan }}</span>?
     </p>
 
