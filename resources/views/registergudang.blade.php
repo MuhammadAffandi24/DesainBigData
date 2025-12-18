@@ -44,7 +44,7 @@
       const lokasi = document.getElementById('lokasi').value;
 
       try {
-        const response = await fetch('/api/gudang', {
+        const response = await fetch('{{ route('gudang.register.post') }}', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
