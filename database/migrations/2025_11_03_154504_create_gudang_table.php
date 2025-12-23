@@ -19,7 +19,9 @@ return new class extends Migration {
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE gudang ADD CONSTRAINT chk_gudang_status CHECK (status IN ('Aktif', 'Tidak Aktif'))");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE gudang ADD CONSTRAINT chk_gudang_status CHECK (status IN ('Aktif', 'Tidak Aktif'))");
+        }
     }
 
     public function down(): void

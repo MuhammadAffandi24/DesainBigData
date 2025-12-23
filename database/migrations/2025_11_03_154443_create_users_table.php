@@ -17,8 +17,11 @@ return new class extends Migration {
             $table->timestamp('created_at')->useCurrent();
         });
 
-        DB::statement("ALTER TABLE users ADD CONSTRAINT chk_users_status CHECK (status IN ('Aktif', 'Tidak Aktif'))");
-        DB::statement("ALTER TABLE users ADD CONSTRAINT chk_users_role CHECK (role IN ('Admin', 'Superadmin'))");
+        // Cek driver, jika BUKAN sqlite baru jalankan perintah ini
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE users ADD CONSTRAINT chk_users_status CHECK (status IN ('Aktif', 'Tidak Aktif'))");
+            DB::statement("ALTER TABLE users ADD CONSTRAINT chk_users_role CHECK (role IN ('Admin', 'Superadmin'))");
+        }      
     }
 
     public function down(): void

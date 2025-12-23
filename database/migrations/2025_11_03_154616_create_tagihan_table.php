@@ -20,7 +20,9 @@ return new class extends Migration {
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
 
-        DB::statement("ALTER TABLE tagihan ADD CONSTRAINT chk_tagihan_status CHECK (status_pembayaran IN ('Lunas', 'Belum Lunas', 'Belum Dibayar', 'Terlambat'))");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE tagihan ADD CONSTRAINT chk_tagihan_status CHECK (status_pembayaran IN ('Lunas', 'Belum Lunas', 'Belum Dibayar', 'Terlambat'))");
+        }
     }
 
     public function down(): void
