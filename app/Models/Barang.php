@@ -16,15 +16,24 @@ class Barang extends Model
     public $timestamps = false;
     protected $fillable = [
         'gudang_id',
+        'toko_id'
         'nama_barang',
         'kategori',
         'jumlah_barang',
         'harga_barang',
-        'toko_pembelian'
+        'toko_pembelian',
+        'gambar'
     ];
 
+    // Relasi ke gudang
     public function gudang()
     {
         return $this->belongsTo(Gudang::class, 'gudang_id');
+    }
+
+    // Relasi ke toko
+    public function toko()
+    {
+        return $this->belongsTo(Toko::class, 'toko_id', 'toko_id');
     }
 }
