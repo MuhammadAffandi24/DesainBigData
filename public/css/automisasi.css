@@ -1,0 +1,97 @@
+/* ============================================================
+   AUTOMISASI BELANJA
+============================================================ */
+.overlay-belanja {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.belanja-light {
+  position: relative;
+  width: 350px;
+  height: auto;
+  background-color: #E1D4C2; 
+  border-radius: 8px;
+  padding: 20px 50px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  color: #291C0E;
+  font-family: 'Poppins', sans-serif;
+  text-align: left; 
+}
+
+.belanja-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.belanja-message {
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+  color: #291C0E;
+  text-align: left; 
+}
+
+.belanja-field {
+  text-align: left;
+}
+
+.belanja-field label {
+  font-size: 14px;
+  font-weight: 400; 
+  color: #291C0E;
+  display: block;   
+}
+
+/* field text (toko lain) */
+.belanja-field input[type="text"],
+.toko-lain-input {
+  margin-top: 2px;
+  width: 310px;
+  padding: 6px;
+  border: 1px solid #291C0E;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+/* grup opsi toko */
+.belanja-toko-group {
+  display: flex;
+  flex-direction: column; 
+  gap: 2px;
+}
+
+.toko-option {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.belanja-btn-group {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-belanja {
+  padding: 10px 33px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-decoration: none;
+  background-color: #291C0E;
+  color: #f8e8d0;
+}
+
+.btn-belanja:hover {
+  background-color: #352514;
+}

@@ -1,0 +1,116 @@
+/* NOTIFIKASI STOK HAMPIR HABIS */
+
+/* 
+    Kesepakatan bersama editor notifikasi:
+    Judul 20px, 700
+    Content 12px, 300
+    Tombol 14px, 600
+
+    #291C0E --> gelap
+    #E4D8C8 --> terang
+
+
+*/
+
+/* Import Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+
+/* Mengatur posisi pop up */
+.stock-low-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 932px;
+    background-color: #291c0e;
+    border-radius: 8px;
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    padding: 20px;
+}
+
+/* Mengatur isi pop up */
+.stock-low-content {
+    /* Warna Teks */
+    color: #E4D8C8;
+    font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+}
+
+/* Judul */
+.stock-low-title {
+    text-align: center;
+    color: #E4D8C8;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    font-style: normal; /* Ini harusnya ExtraBold*/
+    line-height: 100%;
+    letter-spacing: 0%;
+    margin-bottom: 20px;
+}
+
+/* Container untuk list produk yang stoknya hampir habis*/
+.stock-low-items {
+    margin-bottom: 20px;
+}
+
+/* Setiap baris produk */
+.stock-low-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    padding: 10px 0;
+    font-weight: 300;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0;
+}
+
+/* nama + sisa stok */
+.stock-info {
+    font-size: 12px;
+    color: #E4D8C8;
+}
+
+/* Tombol "Tambah ke Daftar Belanja" */
+.add-to-cart-btn {
+    background-color: #E4D8C8;
+    color: #291C0E;
+    border: none;
+    width: 192px;
+    height: 86px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Background */
+.add-to-cart-btn:hover {
+    background-color: #291C0E;
+}
+
+/* Tombol "Buka Daftar Belanja" */
+.open-cart-btn {
+    display: block;
+    width: 100%;
+    background-color: #291C0E;
+    color: #E4D8C8;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    font-weight: 600;
+    font-style: normal;
+    font-size: 14px;
+}
+
+.open-cart-btn:hover {
+    background-color: #0056b3;
+}
