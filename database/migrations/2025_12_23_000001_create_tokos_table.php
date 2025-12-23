@@ -9,7 +9,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tokos', function (Blueprint $table) {
-            $table->id('toko_id'); // Pakai toko_id biar konsisten sama temanmu
+            $table->id('toko_id'); // Pakai toko_id sebagai primary key
             $table->string('nama_toko', 100);
             $table->string('alamat', 255)->nullable();
             $table->string('banner_toko', 255)->nullable(); // Foto Toko

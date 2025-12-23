@@ -9,7 +9,7 @@ class Toko extends Model
 {
     use HasFactory;
     
-    protected $primaryKey = 'toko_id'; // Kunci utama
+    protected $primaryKey = 'toko_id';
     protected $guarded = ['toko_id'];
 
     public function barangs()

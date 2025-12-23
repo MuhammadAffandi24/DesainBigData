@@ -13,7 +13,7 @@ class TokoSeeder extends Seeder
 {
     public function run(): void
     {
-        // 1. Pastikan ada User & Gudang dulu (Syarat dari tabel temanmu)
+        // Pastikan ada User & Gudang dulu
         $user = User::firstOrCreate(
             ['username' => 'owner_toko'],
             ['password' => Hash::make('123456'), 'role' => 'Admin']
@@ -24,7 +24,7 @@ class TokoSeeder extends Seeder
             ['user_id' => $user->user_id, 'lokasi' => 'Surakarta']
         );
 
-        // 2. Daftar Toko sesuai Desain Figma
+        // Daftar Toko sesuai Desain Figma
         $dataToko = [
             ['nama' => 'Rejeki Abadi', 'img' => 'toko1.jpg'],
             ['nama' => 'Amanah', 'img' => 'toko2.jpg'],
@@ -38,19 +38,19 @@ class TokoSeeder extends Seeder
             $toko = Toko::create([
                 'nama_toko' => $dt['nama'],
                 'alamat' => 'Pasar Gede, Surakarta',
-                'banner_toko' => $dt['img'] // Pastikan gambar ada di public/assets
+                'banner_toko' => $dt['img'] // memastikan gambar ada di public/assets
             ]);
 
-            // 3. Isi Barang untuk setiap Toko
+            // Isi Barang untuk setiap Toko
             Barang::create([
-                'gudang_id' => $gudang->gudang_id, // Wajib diisi (relasi temanmu)
-                'toko_id' => $toko->toko_id,       // Relasi baru kita
+                'gudang_id' => $gudang->gudang_id, // wajib diisi
+                'toko_id' => $toko->toko_id,       // relasi baru
                 'nama_barang' => 'Kopi Arabica',
                 'kategori' => 'Minuman',
                 'jumlah_barang' => 50,
                 'harga_barang' => 25000,
                 'gambar' => 'kopi.png',
-                'toko_pembelian' => $toko->nama_toko // Opsional, buat backup string
+                'toko_pembelian' => $toko->nama_toko // Opsional, untuk backup string
             ]);
 
             Barang::create([
