@@ -16,7 +16,7 @@ class Barang extends Model
     public $timestamps = false;
     protected $fillable = [
         'gudang_id',
-        'toko_id'
+        'toko_id',
         'nama_barang',
         'kategori',
         'jumlah_barang',
