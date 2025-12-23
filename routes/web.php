@@ -71,7 +71,7 @@ Route::middleware('auth')->group(function () {
     # HOME (PAKAI BARANG CONTROLLER WEB)
     Route::get('/home', [BarangController::class, 'index'])
         ->name('home');
-        
+
     Route::resource('barang', BarangController::class);
 });
 
@@ -86,3 +86,24 @@ Route::post('/superadmin/user/{id}/status', [SuperadminUserController::class, 'u
 
 Route::delete('/superadmin/user/{id}', [SuperadminUserController::class, 'destroy'])
     ->name('superadmin.user.delete');
+
+# ===============================
+# Halaman Daftar Toko
+# ===============================
+Route::get('/cek-toko', function () {
+    return view('toko.index');
+})->name('toko.index');
+
+# ===============================
+# Halaman Detail Toko (Daftar Produk)
+# ===============================
+Route::get('/cek-toko/{id}', function ($id) {
+    return view('toko.show');
+})->name('toko.show');
+
+# ===============================
+# Halaman Detail Produk
+# ===============================
+Route::get('/produk/{id}', function ($id) {
+    return view('produk.detail');
+})->name('produk.show');
