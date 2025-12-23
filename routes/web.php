@@ -3,46 +3,64 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+
+// API Controllers
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\GudangController;
+
+// WEB Controllers
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SuperadminUserController;
 use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 
+# ===============================
 # Landing Page
+# ===============================
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
 
-# Login
+# ===============================
+# Login User
+# ===============================
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login.form');
 
 Route::post('/login', function (Request $request) {
     $credentials = $request->only('username', 'password');
+
     if (Auth::attempt($credentials)) {
         $request->session()->regenerate();
         return redirect()->route('gudang.register.form');
     }
+
     return back()->with('error', 'username atau password salah!');
 })->name('login');
 
+# ===============================
 # Login Admin
+# ===============================
 Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])
     ->name('admin.login');
 
 Route::post('/admin/login', [AdminAuthController::class, 'login'])
     ->name('admin.login.submit');
 
-# Register (User)
+# ===============================
+# Register User
+# ===============================
 Route::get('/register', function () {
-    return view('auth.register'); // form register user
+    return view('auth.register');
 })->name('register');
 
-# Register Gudang (hanya untuk user login)
+# ===============================
+# Route yang butuh LOGIN
+# ===============================
 Route::middleware('auth')->group(function () {
 
+    # Register Gudang
     Route::get('/gudang/register', function () {
         return view('registergudang');
     })->name('gudang.register.form');
@@ -50,13 +68,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/gudang/register', [GudangController::class, 'store'])
         ->name('gudang.register.post');
 
-    Route::get('/home', function () {
-        return view('home'); // atau dashboard user
-    })->name('home');
+    # HOME (PAKAI BARANG CONTROLLER WEB)
+    Route::get('/home', [BarangController::class, 'index'])
+        ->name('home');
+        
+    Route::resource('barang', BarangController::class);
 });
 
-
+# ===============================
 # Superadmin
+# ===============================
 Route::get('/superadmin/home', [SuperadminDashboardController::class, 'index'])
     ->name('superadmin.home');
 
