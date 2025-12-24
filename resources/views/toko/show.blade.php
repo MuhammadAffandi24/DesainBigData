@@ -33,16 +33,48 @@
     </nav>
 
     <div class="main-wrapper">
+        {{-- TOMBOL KEMBALI --}}
         <div class="nav-header">
             <a href="{{ route('toko.index') }}" class="back-icon">
                 <i class="fas fa-chevron-left"></i>
             </a>
         </div>
 
-        <div class="shop-banner" style="background: #e8d9c1; padding: 40px; border-radius: 20px; margin-bottom: 30px;">
-            <h1 style="color: #291C0E; margin: 0;">Daftar Produk</h1>
-            <p style="color: #555;">Pilih barang kebutuhan Anda di sini</p>
+        {{-- HEADER TOKO --}}
+        <div class="shop-banner-dark">
+             <h1>{{ $barang->first()->toko_pembelian ?? 'Daftar Produk' }}</h1>
         </div>
+
+        {{-- === MULAI KODE FILTER === --}}
+        <form action="{{ route('toko.show', $id) }}" method="GET">
+            <div class="filter-bar">
+                
+                {{-- Kiri: Dropdown Kategori --}}
+                <div class="filter-left">
+                    <select name="kategori" class="filter-select">
+                        <option value="">Semua Kategori</option>
+                        @foreach($categories as $cat)
+                            <option value="{{ $cat }}" {{ request('kategori') == $cat ? 'selected' : '' }}>
+                                {{ $cat }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Kanan: Tombol Apply & Reset --}}
+                <div class="filter-right">
+                    <button type="submit" class="btn-apply">Apply</button>
+                    
+                    {{-- Tombol Reset: Link kembali ke URL toko tanpa filter --}}
+                    <a href="{{ route('toko.show', $id) }}" class="btn-reset">Reset</a>
+                </div>
+
+            </div>
+        </form>
+        {{-- === SELESAI KODE FILTER === --}}
+
+        <div class="product-grid">
+            {{-- ... Kode Grid Produk di bawah sini ... --}}
 
         <div class="product-grid">
             @forelse($barang as $item)
@@ -66,5 +98,6 @@
             @endforelse
         </div>
     </div>
+    
 </body>
 </html>

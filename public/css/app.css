@@ -1243,8 +1243,10 @@ html {
 /* Grid Produk */
 .product-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    grid-template-columns: repeat(3, 1fr); /* 3 Kolom */
     gap: 30px;
+    margin-top: 60px;
 }
 
 .product-card {
@@ -1267,17 +1269,20 @@ html {
 
 .product-image {
     width: 100%;
-    height: 180px;
+    height: auto;
+    aspect-ratio: 3 / 2;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
 .product-image img {
     max-width: 100%;
     max-height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .product-title {
@@ -1290,6 +1295,7 @@ html {
 
 .product-price {
     font-size: 14px;
+    font-weight: 600;
     color: #291C0E;
     margin: 0;
     align-self: flex-start;
@@ -1360,110 +1366,256 @@ html {
     }
 }
 
+/* PLACEHOLDER PRODUK JADI PUTIH */
+.placeholder-white {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF !important; /* Putih Bersih */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+.placeholder-white i {
+    font-size: 40px;
+    color: #CCCCCC !important; /* Ikon abu-abu muda */
+}
+
+/* BANNER TOKO COKELAT TUA */
+.shop-banner-dark {
+    background-color: #291C0E !important; 
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    color: #E1D4C2 !important;
+}
+.shop-banner-dark h1, 
+.shop-banner-dark p {
+     color: #E1D4C2 !important;
+     margin: 0;
+}
 /* =========================================
-   DETAIL PRODUK (NEW STYLE & PLACEHOLDER)
-   Tempel ini di paling bawah app.css
+   GRID VS DETAIL
 ========================================= */
 
-/* Wadah Utama */
+/* --- 1. GAYA KHUSUS GRID (Halaman Daftar Produk) --- */
+.product-grid .product-card {
+    background: white;
+    border-radius: 20px; /* Sudut lebih kotak sesuai referensi */
+    padding: 15px;       /* Padding dikecilkan */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s;
+}
+
+.product-grid .product-image {
+    height: 150px;       /* Tinggi gambar di grid dibatasi */
+    margin-bottom: 10px;
+}
+
+/* JUDUL DI GRID (KECIL) */
+.product-grid .product-title {
+    font-size: 16px !important; /* Paksa Kecil */
+    font-weight: 700;
+    color: #291C0E;
+    margin: 5px 0;
+    text-align: left;
+    width: 100%;
+}
+
+/* HARGA DI GRID (KECIL) */
+.product-grid .product-price {
+    font-size: 14px !important; /* Paksa Kecil */
+    font-weight: 600;
+    color: #291C0E;
+    text-align: left;
+    width: 100%;
+}
+
+/* PLACEHOLDER PUTIH (KHUSUS GRID) */
+.placeholder-white {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid #eee;
+}
+.placeholder-white i {
+    font-size: 30px;
+    color: #ddd !important;
+}
+
+
+/* --- 2. GAYA KHUSUS DETAIL PAGE (Halaman Satuan) --- */
 .product-detail-container {
-    max-width: 1000px;
-    margin: 140px auto 60px; /* Jarak dari navbar */
+    max-width: 1100px;
+    margin: 180px auto 80px;
     padding: 0 5%;
     display: flex;
-    gap: 50px; /* Jarak antara gambar dan teks */
+    gap: 60px;
     align-items: center;
 }
 
-/* Bagian Kiri (Wadah Gambar) */
+/* JUDUL DI DETAIL (BESAR) */
+.product-detail-container .product-title {
+    font-size: 48px !important; /* Besar hanya di halaman detail */
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+/* HARGA DI DETAIL (BESAR) */
+.product-detail-container .product-price {
+    font-size: 36px !important;
+    margin-top: 20px;
+}
+
 .product-image-section {
     flex: 1;
-    min-width: 400px;
+    min-width: 0;
+    background-color: #543318;
+    border-radius: 40px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* GAYA 1: Jika Gambar Ada */
-.product-img-real {
+.product-img-real, .product-placeholder {
     width: 100%;
     height: 400px;
-    object-fit: cover; /* Agar gambar tidak gepeng */
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    object-fit: contain;
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
 }
 
-/* GAYA 2: Jika Gambar Hilang (PLACEHOLDER TEMA) */
+/* Placeholder Detail Tetap Cokelat (Sesuai tema detail) atau Putih jika mau disamakan */
 .product-placeholder {
     width: 100%;
     height: 400px;
-    
-    /* Warna Background Cokelat Tua (Tema STOKIFY) */
     background-color: #291C0E; 
-    
-    border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    
-    /* Warna Teks & Ikon Cream */
     color: #E1D4C2; 
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(41, 28, 14, 0.2);
 }
-
 .product-placeholder i {
     font-size: 80px;      
     margin-bottom: 20px;
     color: #E1D4C2;       
-    opacity: 0.9;
 }
 
-/* Bagian Kanan (Informasi Produk) */
-.product-info-section {
-    flex: 1;
+.shop-banner-dark {
+    background-color: #291C0E !important;
+    padding: 40px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+}
+.shop-banner-dark h1 { color: #E1D4C2 !important; margin: 0; }
+.shop-banner-dark p { color: #E1D4C2 !important; margin: 0; opacity: 0.8; }
+
+/* =========================================
+   FILTER BAR STYLE
+========================================= */
+
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 0 10px;
 }
 
-.product-title {
-    font-size: 48px;
-    font-weight: 800;
+.filter-left {
+    display: flex;
+    gap: 15px;
+}
+
+/* Dropdown Style */
+.filter-select {
+    background-color: transparent;
+    border: 2px solid #291C0E;
     color: #291C0E;
-    margin-bottom: 10px;
-    line-height: 1.2;
-}
-
-.product-category {
-    font-size: 18px;
-    color: #291C0E;
-    background: #E1D4C2; /* Badge warna cream */
-    border: 1px solid #291C0E;
-    padding: 5px 15px;
-    border-radius: 50px;
-    display: inline-block;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-
-.product-price {
-    font-size: 36px;
+    padding: 8px 15px;
+    font-size: 16px;
     font-weight: 700;
-    color: #291C0E;
-    margin-top: 20px;
+    font-family: 'Poppins', sans-serif;
+    min-width: 200px;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Hilangkan panah default browser */
+    
+    /* Ganti panah custom (Opsional, pakai karakter v) */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23291C0E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
 }
 
-/* Responsif untuk HP (Layar Kecil) */
-@media (max-width: 768px) {
-    .product-detail-container {
-        flex-direction: column;
-        margin-top: 100px;
-        gap: 30px;
-    }
-    .product-image-section {
-        min-width: 100%;
-    }
-    .product-placeholder, .product-img-real {
-        height: 300px; /* Perkecil tinggi di HP */
-    }
-    .product-title {
-        font-size: 32px;
-    }
+.filter-right {
+    display: flex;
+    gap: 10px;
+}
+
+/* Tombol Apply (Gelap) */
+.btn-apply {
+    background-color: #291C0E;
+    color: #E1D4C2;
+    border: 2px solid #291C0E;
+    padding: 8px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    border-radius: 5px; /* Sedikit rounded sesuai gambar */
+    transition: 0.2s;
+}
+
+.btn-apply:hover {
+    background-color: #3f2b16;
+}
+
+/* Tombol Reset (Outline) */
+.btn-reset {
+    background-color: transparent;
+    color: #291C0E;
+    border: 2px solid #291C0E;
+    padding: 8px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+.btn-reset:hover {
+    background-color: #291C0E;
+    color: #E1D4C2;
+}
+
+.filter-bar {
+    margin-bottom: 50px !important; /* Jarak dari filter ke bawah */
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Garis tipis pemisah */
+}
+
+.product-grid {
+    margin-top: 100px !important; /* Paksa turun 100px */
+    position: relative;
+    z-index: 1; /* Pastikan tidak tertumpuk */
+    display: grid;
+    gap: 30px;
+}
+
+
+.main-wrapper {
+    padding-bottom: 100px !important;
 }

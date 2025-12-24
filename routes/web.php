@@ -100,9 +100,17 @@ Route::get('/cek-toko', function () {
 # ===============================
 # Halaman Detail Toko (Daftar Produk)
 # ===============================
-Route::get('/cek-toko/{id}', function ($id) {
-    $barang = Barang::where('toko_id', $id)->get();
-    return view('toko.show', compact('barang'));
+Route::get('/cek-toko/{id}', function ($id, Request $request) {
+    $query = Barang::where('toko_id', $id);
+    $categories = Barang::where('toko_id', $id)
+        ->select('kategori')
+        ->distinct()
+        ->pluck('kategori');
+    if ($request->has('kategori') && $request->kategori != '') {
+        $query->where('kategori', $request->kategori);
+    }
+    $barang = $query->get();
+    return view('toko.show', compact('barang', 'categories', 'id'));
 })->name('toko.show');
 
 # ===============================
