@@ -14,6 +14,9 @@ use App\Http\Controllers\SuperadminUserController;
 use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 
+// Models Controllers
+use App\Models\Barang;
+
 # ===============================
 # Landing Page
 # ===============================
@@ -98,12 +101,14 @@ Route::get('/cek-toko', function () {
 # Halaman Detail Toko (Daftar Produk)
 # ===============================
 Route::get('/cek-toko/{id}', function ($id) {
-    return view('toko.show');
+    $barang = Barang::where('toko_id', $id)->get();
+    return view('toko.show', compact('barang'));
 })->name('toko.show');
 
 # ===============================
 # Halaman Detail Produk
 # ===============================
 Route::get('/produk/{id}', function ($id) {
-    return view('produk.detail');
+    $barang = Barang::findOrFail($id);
+    return view('toko.detail', compact('barang'));
 })->name('produk.show');

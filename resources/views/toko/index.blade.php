@@ -32,7 +32,9 @@
 
     <div class="main-wrapper">
         <div class="nav-header">
-            <a href="/" class="back-icon">&#10094;</a>
+            <a href="{{ url('/')}}" class="back-icon">&#10094;
+                <i class="fas fa-chevron-left"></i>
+            </a>
         </div>
 
         <div class="shop-grid">
