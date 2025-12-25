@@ -15,6 +15,7 @@ use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 
 // Models Controllers
+use App\Models\Toko;
 use App\Models\Barang;
 
 # ===============================
@@ -94,7 +95,8 @@ Route::delete('/superadmin/user/{id}', [SuperadminUserController::class, 'destro
 # Halaman Daftar Toko
 # ===============================
 Route::get('/cek-toko', function () {
-    return view('toko.index');
+    $tokos = Toko::all();
+    return view('toko.index', compact('tokos'));
 })->name('toko.index');
 
 # ===============================

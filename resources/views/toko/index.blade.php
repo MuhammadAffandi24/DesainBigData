@@ -6,6 +6,7 @@
     <title>Cek Toko - STOKIFY</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -32,41 +33,38 @@
 
     <div class="main-wrapper">
         <div class="nav-header">
-            <a href="{{ url('/')}}" class="back-icon">&#10094;
+            <a href="{{ url('/')}}" class="back-icon">
                 <i class="fas fa-chevron-left"></i>
             </a>
         </div>
 
         <div class="shop-grid">
-            <a href="{{ route('toko.show', 1) }}" class="shop-card active">
-                <img src="{{ asset('assets/toko1.jpg') }}" alt="Rejeki Abadi">
-                <h3 class="shop-name">Rejeki Abadi</h3>
-            </a>
-            
-            <a href="{{ route('toko.show', 2) }}" class="shop-card">
-                <img src="{{ asset('assets/toko2.jpg') }}" alt="Amanah">
-                <h3 class="shop-name">Amanah</h3>
-            </a>
+            {{-- LOOPING DATA DARI DATABASE (DYNAMIC) --}}
+            @foreach($tokos as $toko)
+                <a href="{{ route('toko.show', $toko->toko_id) }}" class="shop-card">
+                    
+                    {{-- LOGIKA CEK GAMBAR --}}
+                    @php 
+                        // Menggunakan nama kolom di database: 'banner_toko'
+                        $path = 'assets/' . $toko->banner_toko;
+                        $gambar_ada = !empty($toko->banner_toko) && file_exists(public_path($path));
+                    @endphp
 
-            <a href="{{ route('toko.show', 3) }}" class="shop-card">
-                <img src="{{ asset('assets/toko3.jpg') }}" alt="Serba Ada">
-                <h3 class="shop-name">Serba Ada</h3>
-            </a>
+                    @if($gambar_ada)
+                        {{-- Gambar Ada --}}
+                        <img src="{{ asset($path) }}" alt="{{ $toko->nama_toko }}">
+                    @else
+                        {{-- Gambar Hilang -> Placeholder Cokelat --}}
+                        <div class="img-placeholder">
+                            <i class="fas fa-store-alt"></i>
+                            <span>Gambar Tidak Tersedia</span>
+                        </div>
+                    @endif
 
-            <a href="{{ route('toko.show', 4) }}" class="shop-card">
-                <img src="{{ asset('assets/toko4.jpg') }}" alt="Pojok Barang">
-                <h3 class="shop-name">Pojok Barang</h3>
-            </a>
-
-            <a href="{{ route('toko.show', 5) }}" class="shop-card">
-                <img src="{{ asset('assets/toko5.jpg') }}" alt="Toko Maju Jaya">
-                <h3 class="shop-name">Toko Maju Jaya</h3>
-            </a>
-
-            <a href="{{ route('toko.show', 6) }}" class="shop-card">
-                <img src="{{ asset('assets/toko6.jpg') }}" alt="Laci Ajaib">
-                <h3 class="shop-name">Laci Ajaib</h3>
-            </a>
+                    {{-- Nama Toko dari Database --}}
+                    <h3 class="shop-name">{{ $toko->nama_toko }}</h3>
+                </a>
+            @endforeach
         </div>
     </div>
 

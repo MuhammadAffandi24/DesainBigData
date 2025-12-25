@@ -1139,7 +1139,7 @@ html {
     position: absolute;
     bottom: 20px;
     left: 20px;
-    color: #fff;
+    color: #d6c4a5;
     font-size: 24px;
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0,0,0,0.6);
@@ -1618,4 +1618,41 @@ html {
 
 .main-wrapper {
     padding-bottom: 100px !important;
+}
+
+/* =========================================
+   GLOBAL PLACEHOLDER
+   untuk Index, Show, dan Detail
+========================================= */
+
+.img-placeholder {
+    width: 100%;
+    height: 100%;
+    background-color: #291C0E; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #E1D4C2; 
+    text-align: center;
+    padding: 15px;
+}
+
+.img-placeholder i {
+    font-size: 32px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.img-placeholder span {
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Poppins', sans-serif;
+}
+
+.product-image-section .img-placeholder i {
+    font-size: 60px;
+}
+.product-image-section .img-placeholder span {
+    font-size: 18px;
 }
