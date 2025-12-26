@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Produk</title>
+    <title>{{ $toko->nama_toko }} - Daftar Produk</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -40,12 +40,48 @@
             </a>
         </div>
 
-        {{-- HEADER TOKO --}}
-        <div class="shop-banner-dark">
-             <h1>{{ $barang->first()->toko_pembelian ?? 'Daftar Produk' }}</h1>
-        </div>
+        {{-- ========================================================= --}}
+        {{-- BANNER TOKO (DINAMIS DENGAN LOGIKA CEK EKSTENSI)          --}}
+        {{-- ========================================================= --}}
+        @php
+            // Logika Cek Gambar Toko (Sama persis dengan index.blade)
+            $banner_db = $toko->banner_toko; 
+            $banner_base = pathinfo($banner_db, PATHINFO_FILENAME);
+            $exts = ['jpg', 'jpeg', 'png', 'webp'];
+            $banner_final = null;
 
-        {{-- === MULAI KODE FILTER === --}}
+            if(!empty($banner_db)){
+                foreach ($exts as $ext) {
+                    $path_check = 'assets/' . $banner_base . '.' . $ext;
+                    if (file_exists(public_path($path_check))) {
+                        $banner_final = $path_check;
+                        break;
+                    }
+                }
+            }
+        @endphp
+
+        @if($banner_final)
+            {{-- JIKA GAMBAR ADA: Pakai Style Banner dengan Gambar --}}
+            <div class="shop-banner">
+                <img src="{{ asset($banner_final) }}" alt="{{ $toko->nama_toko }}">
+                <div class="banner-content">
+                    <h1>{{ $toko->nama_toko }}</h1>
+                    <p>{{ $toko->alamat ?? 'Alamat tidak tersedia' }}</p>
+                </div>
+            </div>
+        @else
+            {{-- JIKA GAMBAR HILANG: Pakai Style Banner Gelap (Fallback) --}}
+            <div class="shop-banner-dark">
+                 <h1>{{ $toko->nama_toko }}</h1>
+                 <p>Silakan pilih barang kebutuhan Anda</p>
+            </div>
+        @endif
+
+
+        {{-- ========================================================= --}}
+        {{-- FILTER BAR                                                --}}
+        {{-- ========================================================= --}}
         <form action="{{ route('toko.show', $id) }}" method="GET">
             <div class="filter-bar">
                 
@@ -64,27 +100,43 @@
                 {{-- Kanan: Tombol Apply & Reset --}}
                 <div class="filter-right">
                     <button type="submit" class="btn-apply">Apply</button>
-                    
-                    {{-- Tombol Reset: Link kembali ke URL toko tanpa filter --}}
                     <a href="{{ route('toko.show', $id) }}" class="btn-reset">Reset</a>
                 </div>
 
             </div>
         </form>
-        {{-- === SELESAI KODE FILTER === --}}
 
-        <div class="product-grid">
-            {{-- ... Kode Grid Produk di bawah sini ... --}}
-
+        {{-- ========================================================= --}}
+        {{-- GRID PRODUK (DENGAN LOGIKA CEK EKSTENSI)                  --}}
+        {{-- ========================================================= --}}
         <div class="product-grid">
             @forelse($barang as $item)
                 <a href="{{ route('produk.show', $item->barang_id) }}" class="product-card">
                     <div class="product-image">
-                        @if(file_exists(public_path('assets/' . $item->gambar)) && !empty($item->gambar))
-                            <img src="{{ asset('assets/' . $item->gambar) }}" alt="{{ $item->nama_barang }}">
+                        @php
+                            // Logika Cek Gambar Produk
+                            $prod_db = $item->gambar;
+                            $prod_base = pathinfo($prod_db, PATHINFO_FILENAME);
+                            $prod_final = null;
+
+                            if (!empty($prod_db)) {
+                                foreach ($exts as $ext) {
+                                    $p_check = 'assets/' . $prod_base . '.' . $ext;
+                                    if (file_exists(public_path($p_check))) {
+                                        $prod_final = $p_check;
+                                        break;
+                                    }
+                                }
+                            }
+                        @endphp
+
+                        @if($prod_final)
+                            <img src="{{ asset($prod_final) }}" alt="{{ $item->nama_barang }}">
                         @else
-                            <div style="width: 100%; height: 100%; background: #291C0E; display:flex; align-items:center; justify-content:center; border-radius: 15px;">
-                               <i class="fas fa-box-open" style="font-size:40px; color:#E1D4C2;"></i>
+                            {{-- Placeholder jika gambar produk hilang --}}
+                            <div class="img-placeholder">
+                               <i class="fas fa-box-open"></i>
+                               <span>Gambar Tidak Tersedia</span>
                             </div>
                         @endif
                     </div>
@@ -92,8 +144,9 @@
                     <p class="product-price">Rp {{ number_format($item->harga_barang, 0, ',', '.') }}</p>
                 </a>
             @empty
-                <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
-                    <h3>Belum ada produk di toko ini.</h3>
+                <div style="text-align: center; width: 100%; grid-column: 1 / -1; padding: 40px;">
+                    <h3>Produk tidak ditemukan.</h3>
+                    <p>Coba reset filter atau pilih kategori lain.</p>
                 </div>
             @endforelse
         </div>

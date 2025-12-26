@@ -39,29 +39,39 @@
         </div>
 
         <div class="shop-grid">
-            {{-- LOOPING DATA DARI DATABASE (DYNAMIC) --}}
             @foreach($tokos as $toko)
                 <a href="{{ route('toko.show', $toko->toko_id) }}" class="shop-card">
                     
-                    {{-- LOGIKA CEK GAMBAR --}}
+                    {{-- LOGIKA PINTAR: CEK SEGALA JENIS EKSTENSI --}}
                     @php 
-                        // Menggunakan nama kolom di database: 'banner_toko'
-                        $path = 'assets/' . $toko->banner_toko;
-                        $gambar_ada = !empty($toko->banner_toko) && file_exists(public_path($path));
+                        $db_file = $toko->banner_toko; // misal: toko1.jpg
+                        $nama_dasar = pathinfo($db_file, PATHINFO_FILENAME); // ambil: toko1
+                        
+                        // Daftar ekstensi yang mau dicek
+                        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+                        $final_path = null;
+
+                        // Loop cek satu per satu
+                        foreach ($extensions as $ext) {
+                            $cek_path = 'assets/' . $nama_dasar . '.' . $ext;
+                            if (file_exists(public_path($cek_path))) {
+                                $final_path = $cek_path;
+                                break; // Ketemu! Berhenti mencari.
+                            }
+                        }
                     @endphp
 
-                    @if($gambar_ada)
-                        {{-- Gambar Ada --}}
-                        <img src="{{ asset($path) }}" alt="{{ $toko->nama_toko }}">
+                    @if($final_path)
+                        {{-- Gambar Ditemukan (Apapun ekstensinya) --}}
+                        <img src="{{ asset($final_path) }}" alt="{{ $toko->nama_toko }}">
                     @else
-                        {{-- Gambar Hilang -> Placeholder Cokelat --}}
+                        {{-- Gambar Benar-benar Tidak Ada --}}
                         <div class="img-placeholder">
                             <i class="fas fa-store-alt"></i>
                             <span>Gambar Tidak Tersedia</span>
                         </div>
                     @endif
 
-                    {{-- Nama Toko dari Database --}}
                     <h3 class="shop-name">{{ $toko->nama_toko }}</h3>
                 </a>
             @endforeach
