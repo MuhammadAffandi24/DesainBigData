@@ -107,3 +107,15 @@ Route::get('/cek-toko/{id}', function ($id) {
 Route::get('/produk/{id}', function ($id) {
     return view('produk.detail');
 })->name('produk.show');
+
+# ===============================
+# Logout
+# ===============================
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/login');
+})->name('logout');

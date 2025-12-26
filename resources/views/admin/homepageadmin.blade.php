@@ -8,6 +8,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
+
+<!-- DELETE MODAL -->
+<div id="deleteModal" class="modal">
+    <div class="modal-content">
+        <h3>⚠️Hapus User⚠️</h3>
+        <p>
+            Yakin ingin menghapus user
+            <strong id="deleteUsername"></strong>?
+        </p>
+
+        <form id="deleteForm" method="POST">
+            @csrf
+            @method('DELETE')
+
+            <div class="modal-actions">
+                <button type="button" class="btn-cancel" id="cancelDelete">Batal</button>
+                <button type="submit" class="btn-danger">Hapus</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <body>
 
 <!-- ================= NAVBAR ================= -->
@@ -44,12 +66,19 @@
   </div>
 
   <ul class="sidebar-menu">
-    <li><a href="#home">Home</a></li>
+    <li><a href="#home" class="active">Home</a></li>
     <li><a href="#users">Manajemen User</a></li>
     <li><a href="#monitoring">Monitoring Global</a></li>
     <li><a href="#">Pengaturan</a></li>
     <li><a href="#">Akun</a></li>
-    <li class="logout"><a href="/logout">Logout</a></li>
+    <li class="logout-card">
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-btn-card">
+                Logout
+            </button>
+        </form>
+    </li>
   </ul>
 
 </aside>
@@ -121,13 +150,14 @@
           </td>
 
           <td style="text-align:center;">
-            <form action="{{ route('superadmin.user.delete', $u->user_id) }}"
-                    method="POST"
-                    onsubmit="return confirm('Yakin ingin menghapus user ini?')">
-                @csrf
-                @method('DELETE')
-                <button class="btn-delete">Delete</button>
-            </form>
+            @if ($u->role !== 'Superadmin')
+            <button
+                class="btn-delete open-delete-modal"
+                data-id="{{ $u->user_id }}"
+                data-username="{{ $u->username }}">
+                Delete
+            </button>
+            @endif
           </td>
         </tr>
         @endforeach

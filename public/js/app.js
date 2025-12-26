@@ -28,4 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
             overlay.classList.remove('active');
         });
     });
+
+    /* ================= DELETE USER MODAL ================= */
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+    const deleteUsername = document.getElementById('deleteUsername');
+    const cancelDelete = document.getElementById('cancelDelete');
+
+    document.querySelectorAll('.open-delete-modal').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const userId = btn.dataset.id;
+            const username = btn.dataset.username;
+
+            deleteUsername.innerText = username;
+            deleteForm.action = `/superadmin/user/${userId}`;
+            deleteModal.classList.add('show');
+        });
+    });
+
+    cancelDelete.addEventListener('click', () => {
+        deleteModal.classList.remove('show');
+    });
 });

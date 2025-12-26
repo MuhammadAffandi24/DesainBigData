@@ -10,6 +10,17 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
+<!-- ================= MODAL REGISTER ================= -->
+<div class="modal-overlay" id="registerModal">
+  <div class="modal-card">
+    <h2 id="modalTitle">Registrasi Berhasil!</h2>
+    <p id="modalMessage">
+      Akun berhasil dibuat. Silakan login untuk melanjutkan.
+    </p>
+    <button id="modalBtn">Ke Halaman Login</button>
+  </div>
+</div>
+
 <body class="loginadmin-page">
   <div class="register-container">
     {{-- Bagian kiri --}}
@@ -38,34 +49,50 @@
   {{-- Script untuk kirim data ke API --}}
   <script>
     document.getElementById('formRegisterUser').addEventListener('submit', async function(e) {
-      e.preventDefault();
+        e.preventDefault();
 
-      const username = document.getElementById('username').value;
-      const password = document.getElementById('password').value;
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-      try {
-        const response = await fetch('/api/users/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({ username, password })
-        });
+        const modal = document.getElementById('registerModal');
+        const title = document.getElementById('modalTitle');
+        const message = document.getElementById('modalMessage');
+        const btn = document.getElementById('modalBtn');
 
-        const result = await response.json();
+        try {
+            const response = await fetch('/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ username, password })
+            });
 
-        if (response.ok) {
-          alert('Registrasi berhasil!');
-          window.location.href = '/login'; // redirect ke halaman login
-        } else {
-          alert(result.message || 'Terjadi kesalahan saat registrasi.');
+            const result = await response.json();
+
+            if (response.ok) {
+                title.innerText = 'Registrasi Berhasil!';
+                message.innerText = 'Akun berhasil dibuat. Silakan login untuk melanjutkan.';
+                btn.innerText = 'Login Sekarang';
+                btn.onclick = () => window.location.href = '/login';
+            } else {
+                title.innerText = 'Registrasi Gagal!';
+                message.innerText = result.message || 'Terjadi kesalahan saat registrasi.';
+                btn.innerText = 'Tutup';
+                btn.onclick = () => modal.classList.remove('show');
+            }
+
+            modal.classList.add('show');
+
+        } catch (error) {
+            title.innerText = 'Error ⚠️';
+            message.innerText = 'Gagal terhubung ke server.';
+            btn.innerText = 'Tutup';
+            btn.onclick = () => modal.classList.remove('show');
+            modal.classList.add('show');
         }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Gagal terhubung ke server.');
-      }
     });
   </script>
 </body>

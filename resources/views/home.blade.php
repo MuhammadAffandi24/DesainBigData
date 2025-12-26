@@ -72,7 +72,12 @@
       <li><a href="#">Belanja</a></li>
       <li><a href="#">Pengaturan</a></li>
       <li><a href="#">Akun</a></li>
-      <li><a href="#">Logout</a></li>
+      <li>
+        <form action="{{ route('logout') }}" method="POST">
+            @csrf
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+      </li>
     </ul>
   </aside>
 
@@ -99,7 +104,7 @@
       <div class="menu-card">
         <i class="fas fa-receipt fa-2x"></i>
         <img src="{{ asset('assets/Kelola Tagihan.svg') }}" alt="Kelola Tagihan">
-        <h3>Kelola Tagihan</h3>
+        <h3>Kelola Riwayat</h3>
       </div>
     </section>
 

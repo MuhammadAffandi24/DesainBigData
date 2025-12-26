@@ -10,6 +10,17 @@
   <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 
+<!-- ================= MODAL REGISTER GUDANG ================= -->
+<div class="modal-overlay" id="gudangModal">
+  <div class="modal-card">
+    <h2 id="gudangModalTitle">Gudang Berhasil Didaftarkan!</h2>
+    <p id="gudangModalMessage">
+      Gudang berhasil didaftarkan.
+    </p>
+    <button id="gudangModalBtn">Ke Home</button>
+  </div>
+</div>
+
 <body class="loginadmin-page">
   <div class="register-container">
     {{-- Bagian kiri (gambar/logo) --}}
@@ -38,34 +49,50 @@
   {{-- Script untuk submit ke API --}}
   <script>
     document.getElementById('formRegisterGudang').addEventListener('submit', async function (e) {
-      e.preventDefault();
+        e.preventDefault();
 
-      const nama_gudang = document.getElementById('nama_gudang').value;
-      const lokasi = document.getElementById('lokasi').value;
+        const nama_gudang = document.getElementById('nama_gudang').value;
+        const lokasi = document.getElementById('lokasi').value;
 
-      try {
-        const response = await fetch('{{ route('gudang.register.post') }}', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}'
-          },
-          body: JSON.stringify({ nama_gudang, lokasi })
-        });
+        const modal = document.getElementById('gudangModal');
+        const title = document.getElementById('gudangModalTitle');
+        const message = document.getElementById('gudangModalMessage');
+        const btn = document.getElementById('gudangModalBtn');
 
-        const result = await response.json();
+        try {
+            const response = await fetch('{{ route('gudang.register.post') }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ nama_gudang, lokasi })
+            });
 
-        if (response.ok) {
-          alert('Gudang berhasil didaftarkan!');
-          window.location.href = '/home';
-        } else {
-          alert(result.message || 'Terjadi kesalahan saat mendaftarkan gudang.');
+            const result = await response.json();
+
+            if (response.ok) {
+                title.innerText = 'Gudang Berhasil Didaftarkan!';
+                message.innerText = 'Gudang berhasil didaftarkan dan siap digunakan.';
+                btn.innerText = 'Ke Home';
+                btn.onclick = () => window.location.href = '/home';
+            } else {
+                title.innerText = 'Registrasi Gagal';
+                message.innerText = result.message || 'Terjadi kesalahan saat mendaftarkan gudang.';
+                btn.innerText = 'Tutup';
+                btn.onclick = () => modal.classList.remove('show');
+            }
+
+            modal.classList.add('show');
+
+        } catch (error) {
+            title.innerText = 'Error ⚠️';
+            message.innerText = 'Gagal terhubung ke server.';
+            btn.innerText = 'Tutup';
+            btn.onclick = () => modal.classList.remove('show');
+            modal.classList.add('show');
         }
-      } catch (error) {
-        console.error(error);
-        alert('Gagal terhubung ke server.');
-      }
     });
   </script>
 </body>
