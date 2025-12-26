@@ -91,11 +91,11 @@
     </section>
 
     <section class="menu-section">
-      <div class="menu-card">
+      <a href="{{ route('toko.index') }}" class="menu-card" style="text-decoration: none; color: #E1D4C2;">
         <i class="fas fa-store fa-2x"></i>
         <img src="{{ asset('assets/Toko.svg') }}" alt="Toko">
         <h3>Cek Toko</h3>
-      </div>
+      </a>
       <div class="menu-card">
         <i class="fas fa-box fa-2x"></i>
         <img src="{{ asset('assets/Kelola Barang.svg') }}" alt="Kelola Barang">

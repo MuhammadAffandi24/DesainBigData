@@ -14,6 +14,10 @@ use App\Http\Controllers\SuperadminUserController;
 use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 
+// Models Controllers
+use App\Models\Toko;
+use App\Models\Barang;
+
 # ===============================
 # Landing Page
 # ===============================
@@ -91,21 +95,33 @@ Route::delete('/superadmin/user/{id}', [SuperadminUserController::class, 'destro
 # Halaman Daftar Toko
 # ===============================
 Route::get('/cek-toko', function () {
-    return view('toko.index');
+    $tokos = Toko::all();
+    return view('toko.index', compact('tokos'));
 })->name('toko.index');
 
 # ===============================
 # Halaman Detail Toko (Daftar Produk)
 # ===============================
-Route::get('/cek-toko/{id}', function ($id) {
-    return view('toko.show');
+Route::get('/cek-toko/{id}', function ($id, Request $request) {
+    $toko = Toko::findOrFail($id);
+    $categories = Barang::where('toko_id', $id)
+        ->select('kategori')
+        ->distinct()
+        ->pluck('kategori');
+    $query = Barang::where('toko_id', $id);  
+    if ($request->has('kategori') && $request->kategori != '') {
+        $query->where('kategori', $request->kategori);
+    }
+    $barang = $query->get();
+    return view('toko.show', compact('toko', 'barang', 'categories', 'id'));
 })->name('toko.show');
 
 # ===============================
 # Halaman Detail Produk
 # ===============================
 Route::get('/produk/{id}', function ($id) {
-    return view('produk.detail');
+    $barang = Barang::findOrFail($id);
+    return view('toko.detail', compact('barang'));
 })->name('produk.show');
 
 # ===============================
