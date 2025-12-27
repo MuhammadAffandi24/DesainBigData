@@ -41,7 +41,7 @@
         <div class="shop-grid">
             @foreach($tokos as $t)
                 {{-- Link menggunakan nama toko (String) --}}
-                <a href="{{ route('toko.show', urlencode($t->toko_pembelian) }}" class="shop-card">
+                <a href="{{ route('toko.show', urlencode($t->toko_pembelian)) }}" class="shop-card">
                     
                     {{-- CEK SEGALA JENIS EKSTENSI --}}
                     @php 

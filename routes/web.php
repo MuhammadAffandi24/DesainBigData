@@ -111,6 +111,8 @@ Route::get('/cek-toko/{nama_toko}', function ($nama_toko, Request $request) {
         ->select('kategori')
         ->distinct()
         ->pluck('kategori');
+    
+    $query = Barang::where('toko_pembelian', $nama_toko_asli);
 
     if ($request->has('kategori') && $request->filled('kategori')) {
         $query->where('kategori', $request->kategori);

@@ -33,7 +33,7 @@
 
     {{-- Script Back dinamis: kembali ke toko asal barang tersebut --}}
     <div class="nav-header">
-        <a href="{{ route('toko.show', $barang->toko_id ?? 1) }}" class="back-icon">
+        <a href="{{ route('toko.show', urlencode($barang->toko_pembelian)) }}" class="back-icon">
             <i class="fas fa-chevron-left"></i>
         </a>
     </div>

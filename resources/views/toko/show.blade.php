@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $toko->nama_toko }} - Daftar Produk</title>
+    <title>{{ $nama_toko_asli }} - Daftar Produk</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
@@ -40,49 +40,38 @@
             </a>
         </div>
 
-        {{-- ========================================================= --}}
-        {{-- BANNER TOKO (DINAMIS DENGAN LOGIKA CEK EKSTENSI)          --}}
-        {{-- ========================================================= --}}
+        {{-- BANNER TOKO --}}
         @php
-            // Logika Cek Gambar Toko (Sama persis dengan index.blade)
-            $banner_db = $toko->banner_toko; 
-            $banner_base = pathinfo($banner_db, PATHINFO_FILENAME);
-            $exts = ['webp', 'jpg', 'jpeg', 'png'];
+            $exts = ['webp', 'jpeg', 'jpg', 'png'];
             $banner_final = null;
 
-            if(!empty($banner_db)){
-                foreach ($exts as $ext) {
-                    $path_check = 'assets/' . $banner_base . '.' . $ext;
-                    if (file_exists(public_path($path_check))) {
-                        $banner_final = $path_check;
-                        break;
-                    }
+            foreach ($exts as $ext) {
+                $path_check = 'assets/' . $nama_toko_asli . '.' . $ext;
+                if (file_exists(public_path($path_check))) {
+                    $banner_final = $path_check;
+                    break;
                 }
             }
         @endphp
 
         @if($banner_final)
-            {{-- JIKA GAMBAR ADA: Pakai Style Banner dengan Gambar --}}
             <div class="shop-banner">
-                <img src="{{ asset($banner_final) }}" alt="{{ $toko->nama_toko }}">
+                <img src="{{ asset($banner_final) }}" alt="{{ $nama_toko_asli }}">
                 <div class="banner-content">
-                    <h1>{{ $toko->nama_toko }}</h1>
-                    <p>{{ $toko->alamat ?? 'Alamat tidak tersedia' }}</p>
+                    <h1>{{ $nama_toko_asli }}</h1>
+                    <p>Cabang Resmi STOKIFY</p> {{-- Alamat hardcode karena tidak ada di database --}}
                 </div>
             </div>
         @else
-            {{-- JIKA GAMBAR HILANG: Pakai Style Banner Gelap (Fallback) --}}
+            {{-- JIKA GAMBAR TIDAK ADA --}}
             <div class="shop-banner-dark">
-                 <h1>{{ $toko->nama_toko }}</h1>
+                 <h1>{{ $nama_toko_asli }}</h1>
                  <p>Silakan pilih barang kebutuhan Anda</p>
             </div>
         @endif
 
-
-        {{-- ========================================================= --}}
-        {{-- FILTER BAR                                                --}}
-        {{-- ========================================================= --}}
-        <form action="{{ route('toko.show', $id) }}" method="GET">
+        {{-- FILTER BAR --}}
+        <form action="{{ route('toko.show', urlencode($nama_toko_asli)) }}" method="GET">
             <div class="filter-bar">
                 
                 {{-- Kiri: Dropdown Kategori --}}
@@ -100,28 +89,25 @@
                 {{-- Kanan: Tombol Apply & Reset --}}
                 <div class="filter-right">
                     <button type="submit" class="btn-apply">Apply</button>
-                    <a href="{{ route('toko.show', $id) }}" class="btn-reset">Reset</a>
+                    <a href="{{ route('toko.show', urlencode($nama_toko_asli)) }}" class="btn-reset">Reset</a>
                 </div>
-
             </div>
         </form>
 
-        {{-- ========================================================= --}}
-        {{-- GRID PRODUK (DENGAN LOGIKA CEK EKSTENSI)                  --}}
-        {{-- ========================================================= --}}
+        {{-- GRID PRODUK (DENGAN LOGIKA CEK EKSTENSI) --}}
         <div class="product-grid">
             @forelse($barang as $item)
                 <a href="{{ route('produk.show', $item->barang_id) }}" class="product-card">
                     <div class="product-image">
                         @php
-                            // Logika Cek Gambar Produk
+                            // Cek Gambar Produk
                             $prod_db = $item->gambar;
-                            $prod_base = pathinfo($prod_db, PATHINFO_FILENAME);
+                            $prod_dasar = pathinfo($prod_db ?? '', PATHINFO_FILENAME);
                             $prod_final = null;
 
                             if (!empty($prod_db)) {
                                 foreach ($exts as $ext) {
-                                    $p_check = 'assets/' . $prod_base . '.' . $ext;
+                                    $p_check = 'assets/' . $nama_dasar . '.' . $ext;
                                     if (file_exists(public_path($p_check))) {
                                         $prod_final = $p_check;
                                         break;
@@ -130,7 +116,7 @@
                             }
                         @endphp
 
-                        @if($prod_final)
+                        @if($final_path)
                             <img src="{{ asset($prod_final) }}" alt="{{ $item->nama_barang }}">
                         @else
                             {{-- Placeholder jika gambar produk hilang --}}
@@ -151,6 +137,5 @@
             @endforelse
         </div>
     </div>
-    
 </body>
 </html>
