@@ -15,7 +15,6 @@ use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 
 // Models Controllers
-use App\Models\Toko;
 use App\Models\Barang;
 
 # ===============================
@@ -95,25 +94,31 @@ Route::delete('/superadmin/user/{id}', [SuperadminUserController::class, 'destro
 # Halaman Daftar Toko
 # ===============================
 Route::get('/cek-toko', function () {
-    $tokos = Toko::all();
+    $tokos = Barang::select('toko_pembelian')
+        ->whereNotNull('toko_pembelian')
+        ->distinct()
+        ->get();
     return view('toko.index', compact('tokos'));
 })->name('toko.index');
 
 # ===============================
 # Halaman Detail Toko (Daftar Produk)
 # ===============================
-Route::get('/cek-toko/{id}', function ($id, Request $request) {
-    $toko = Toko::findOrFail($id);
-    $categories = Barang::where('toko_id', $id)
+Route::get('/cek-toko/{nama_toko}', function ($nama_toko, Request $request) {
+    $nama_toko_asli = urldecode($nama_toko);
+    
+    $categories = Barang::where('toko_pembelian', $nama_toko_asli)
         ->select('kategori')
         ->distinct()
         ->pluck('kategori');
-    $query = Barang::where('toko_id', $id);  
-    if ($request->has('kategori') && $request->kategori != '') {
+
+    if ($request->has('kategori') && $request->filled('kategori')) {
         $query->where('kategori', $request->kategori);
     }
+
     $barang = $query->get();
-    return view('toko.show', compact('toko', 'barang', 'categories', 'id'));
+
+    return view('toko.show', compact('barang', 'categories', 'nama_toko_asli'));
 })->name('toko.show');
 
 # ===============================

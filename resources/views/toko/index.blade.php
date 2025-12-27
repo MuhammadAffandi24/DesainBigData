@@ -39,44 +39,42 @@
         </div>
 
         <div class="shop-grid">
-            @foreach($tokos as $toko)
-                <a href="{{ route('toko.show', $toko->toko_id) }}" class="shop-card">
+            @foreach($tokos as $t)
+                {{-- Link menggunakan nama toko (String) --}}
+                <a href="{{ route('toko.show', urlencode($t->toko_pembelian) }}" class="shop-card">
                     
-                    {{-- LOGIKA PINTAR: CEK SEGALA JENIS EKSTENSI --}}
+                    {{-- CEK SEGALA JENIS EKSTENSI --}}
                     @php 
-                        $db_file = $toko->banner_toko; // misal: toko1.jpg
-                        $nama_dasar = pathinfo($db_file, PATHINFO_FILENAME); // ambil: toko1
-                        
+                        $nama_toko = $t->toko_pembelian;
+
                         // Daftar ekstensi yang mau dicek
-                        $extensions = ['jpg', 'jpeg', 'png', 'webp'];
+                        $extensions = ['webp', 'jpeg', 'jpg', 'png'];
                         $final_path = null;
 
-                        // Loop cek satu per satu
                         foreach ($extensions as $ext) {
-                            $cek_path = 'assets/' . $nama_dasar . '.' . $ext;
+                            $cek_path = 'assets/' . $nama_toko . '.' . $ext;
                             if (file_exists(public_path($cek_path))) {
                                 $final_path = $cek_path;
-                                break; // Ketemu! Berhenti mencari.
+                                break;
                             }
                         }
                     @endphp
 
                     @if($final_path)
-                        {{-- Gambar Ditemukan (Apapun ekstensinya) --}}
-                        <img src="{{ asset($final_path) }}" alt="{{ $toko->nama_toko }}">
+                        {{-- Gambar Ditemukan --}}
+                        <img src="{{ asset($final_path) }}" alt="{{ $nama_toko }}">
                     @else
-                        {{-- Gambar Benar-benar Tidak Ada --}}
+                        {{-- Gambar Tidak Ada --}}
                         <div class="img-placeholder">
                             <i class="fas fa-store-alt"></i>
                             <span>Gambar Tidak Tersedia</span>
                         </div>
                     @endif
 
-                    <h3 class="shop-name">{{ $toko->nama_toko }}</h3>
+                    <h3 class="shop-name">{{ $nama_toko }}</h3>
                 </a>
             @endforeach
         </div>
     </div>
-
 </body>
 </html>

@@ -47,7 +47,7 @@
             // Logika Cek Gambar Toko (Sama persis dengan index.blade)
             $banner_db = $toko->banner_toko; 
             $banner_base = pathinfo($banner_db, PATHINFO_FILENAME);
-            $exts = ['jpg', 'jpeg', 'png', 'webp'];
+            $exts = ['webp', 'jpg', 'jpeg', 'png'];
             $banner_final = null;
 
             if(!empty($banner_db)){
