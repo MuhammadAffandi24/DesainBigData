@@ -13,6 +13,8 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\SuperadminUserController;
 use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\DashboardController;
+
 
 // Models Controllers
 use App\Models\Barang;
@@ -90,6 +92,13 @@ Route::post('/superadmin/user/{id}/status', [SuperadminUserController::class, 'u
 Route::delete('/superadmin/user/{id}', [SuperadminUserController::class, 'destroy'])
     ->name('superadmin.user.delete');
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/data', [DashboardController::class, 'getData'])->name('dashboard.data');
+});
+
+
 # ===============================
 # Halaman Daftar Toko
 # ===============================
@@ -128,6 +137,7 @@ Route::get('/produk/{id}', function ($id) {
     $barang = Barang::findOrFail($id);
     return view('toko.detail', compact('barang'));
 })->name('produk.show');
+
 
 # ===============================
 # Logout

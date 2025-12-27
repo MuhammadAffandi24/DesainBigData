@@ -375,3 +375,24 @@ button:hover {
     text-align: center;
     margin-top: 15px;
 }
+
+.banner-link {
+    text-decoration: none;
+    display: block;
+}
+
+.banner {
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.banner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.banner h3 {
+    color: #bfa58b;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}

@@ -86,8 +86,10 @@
 
     {{-- Section 1: Menu Utama --}}
     <section class="banner">
-      <img src="{{ asset('assets/Dashboard.svg') }}" alt="Dashboard">
-      <h2>Dashboard</h2>
+      <a href="{{ url('/dashboard') }}" class="banner-link">
+        <img src="{{ asset('assets/Dashboard.svg') }}" alt="Dashboard">
+        <h3>Dashboard</h3>
+      </a>
     </section>
 
     <section class="menu-section">
