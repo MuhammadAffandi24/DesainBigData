@@ -6,6 +6,11 @@ body {
     padding-top: 90px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+
 /* Header */
 .navbar {
     display: flex;
@@ -106,6 +111,7 @@ body {
     width: 250px;
     text-align: center;
     transition: 0.3s;
+    text-decoration: none;
 }
 .menu-card:hover {
     background-color: #5a3921;
@@ -117,11 +123,20 @@ body {
     height: 70px;
     display: block;
     margin: 0 auto 10px auto; /* tengah + jarak bawah */
+    
+}
+
+.section-wrapper {
+    width: 100%;
+    min-height: 650px;
+    margin-bottom: 48px;
+    scroll-margin-top: 150px;
+
 }
 
 /* Table */
 .table-section {
-    margin: 40px auto;
+    margin: 0 auto;
     width: 90%;
 }
 .table-section h3 {
@@ -371,8 +386,18 @@ button:hover {
     color: gray;
 }
 
+/* Table top bar: tombol kiri, pagination kanan */
+.table-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
 .pagination-center {
     text-align: center;
+    display: flex;
+    justify-content: flex-end;
     margin-top: 15px;
 }
 
@@ -395,4 +420,44 @@ button:hover {
     color: #bfa58b;
     font-weight: 700;
     letter-spacing: 0.5px;
+    margin-right: 30px;
+}
+
+.pagination-center svg {
+    width: 14px !important;
+    height: 14px !important;
+}
+
+/* ============================================================
+   FOOTER
+============================================================ */
+footer {
+    background: #291c0e;
+    color: #e1d4c2;
+    padding: 4rem 5rem;
+}
+.footer-top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 3rem;
+}
+.footer-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #e1d4c2;
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+    font-size: 1rem;
+}
+textarea {
+    width: 300px;
+    height: 120px;
+    border-radius: 8px;
+    padding: 0.6rem;
+    border: none;
 }

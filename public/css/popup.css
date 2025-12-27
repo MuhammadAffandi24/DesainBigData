@@ -5,7 +5,7 @@
 .overlay-delete {
   position: fixed;
   inset: 0;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -102,7 +102,7 @@
   background-color: #E1D4C2;
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
   text-align: center;
   color: #333;
   font-family: 'Poppins', sans-serif;
@@ -166,9 +166,9 @@
 ============================================================ */
 /* Overlay background */
 .popup-overlay {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0,0,0,0.5);
+  position: fixed;       
+  inset: 0;              
+  background-color: rgba(0,0,0,0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -177,7 +177,7 @@
 
 /* Container utama popup */
 .add-product-popup {
-  position: relative;
+  position: fixed;     
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -187,9 +187,10 @@
   border: 1px solid #6e473b;
   border-radius: 8px;
   padding: 20px 30px;
-  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   font-family: 'Poppins', sans-serif;
   color: #f8e8d0;
+  z-index: 10000;      
 }
 
 /* Tombol Close */
@@ -208,6 +209,27 @@
   font-weight: 700;
   margin-bottom: 30px;
   text-align: center;
+}
+
+.form-message {
+  display: none;
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  text-align: center;
+}
+
+.form-message.error {
+  background-color: #f8d0d0;
+  color: #8c1c1c;
+  border: 1px solid #8c1c1c;
+}
+
+.form-message.success {
+  background-color: #d4f8d0;
+  color: #2c5f2d;
+  border: 1px solid #2c5f2d;
 }
 
 /* Content */

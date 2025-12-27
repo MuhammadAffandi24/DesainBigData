@@ -10,16 +10,24 @@ function showNotif(action, message, isSuccess) {
   const container = document.getElementById('notif-container') || document.body;
   container.appendChild(notif);
 
-  // tombol close 
   const closeBtn = notif.querySelector('.notif-close');
   if (closeBtn) {
     closeBtn.onclick = () => notif.remove();
   }
 
-  // auto remove setelah 10 detik
   setTimeout(() => {
     if (notif.parentNode) {
       notif.remove();
     }
-  }, 10000);
+  }, 8000);
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  const notifData = sessionStorage.getItem('notif');
+
+  if (notifData) {
+    const { message, isSuccess } = JSON.parse(notifData);
+    showNotif(isSuccess ? 'success' : 'error', message, isSuccess);
+    sessionStorage.removeItem('notif');
+  }
+});

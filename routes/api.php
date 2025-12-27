@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\GudangController;
 use App\Http\Controllers\Api\DaftarBelanjaController;
 use App\Http\Controllers\Api\TagihanController;
 use App\Http\Controllers\Api\RiwayatPembayaranController;
+use App\Http\Controllers\Api\RiwayatBelanjaController;
 
 Route::prefix('users')->group(function () {
     Route::post('/register', [UserController::class, 'register'])->name('register.post');
@@ -19,7 +20,7 @@ Route::prefix('users')->group(function () {
     });
 });
 
-Route::prefix('barang')->group(function () {
+Route::middleware('auth:sanctum')->prefix('barang')->group(function () {
     Route::get('/', [BarangController::class, 'index']);
     Route::post('/', [BarangController::class, 'store']);
     Route::get('/{id}', [BarangController::class, 'show']);
@@ -36,7 +37,9 @@ Route::prefix('gudang')->middleware('auth:sanctum')->group(function () {
 
 Route::prefix('daftar-belanja')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [DaftarBelanjaController::class, 'index']);
-    Route::post('/', [DaftarBelanjaController::class, 'addToCart']);
+    Route::post('/', [DaftarBelanjaController::class, 'storeOrUpdate']);
+    Route::put('/{id}', [DaftarBelanjaController::class, 'storeOrUpdate']);
+    Route::delete('/{id}', [DaftarBelanjaController::class, 'destroy']); 
 });
 
 Route::prefix('tagihan')->middleware('auth:sanctum')->group(function () {
@@ -56,3 +59,6 @@ Route::middleware('auth:sanctum')->prefix('riwayat-pembayaran')->group(function 
     // 🟢 YANG BENAR: TANPA prefix di dalamnya!
     Route::get('/export', [RiwayatPembayaranController::class, 'exportCsv']);
 });
+
+Route::get('/riwayat-belanja', [RiwayatBelanjaController::class, 'index'])
+    ->name('riwayat-belanja.index');

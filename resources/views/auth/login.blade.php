@@ -21,7 +21,7 @@
   <div class="right">
     <h1 style="margin-bottom:20px; color:#bfa58b; text-align:center">Login</h1>
 
-    <form class="login-form" action="{{ route('login.form') }}" method="POST">
+    <form class="login-form" action="{{ route('login') }}" method="POST">
       @csrf
 
       @if(session('error'))
@@ -38,7 +38,6 @@
     <p style="color:#bfa58b;">Belum punya akun?
       <a href="{{ route('register') }}" style="color:#bfa58b;">Daftar</a>
     </p>
-    
   </div>
 </div>
 

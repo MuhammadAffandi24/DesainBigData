@@ -1,0 +1,198 @@
+/* ============================= */
+/* STOK LOW POPUP STYLE */
+/* ============================= */
+.stock-low-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 9998;
+}
+
+.stock-low-popup {
+  position: relative;
+  top: 120px;
+  width: 420px; 
+  background-color: #291c0e;
+  border-radius: 8px;
+  padding: 10px 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  color: #f8e8d0;
+  font-family: 'Poppins', sans-serif;
+  z-index: 9999;
+}
+
+.stock-low-close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.stock-low-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.stock-low-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  max-height: 250px;
+  overflow-y: auto;
+  margin-bottom: 15px;
+}
+
+.stock-low-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.stock-low-item span {
+  color: #f8e8d0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
+
+.stock-low-item button {
+  padding: 6px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: #f8e8d0;
+  color: #291c0e;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  text-align: center;
+}
+
+.stock-low-item button:hover {
+  background-color: #e0d3b3;
+}
+
+.stock-low-open-cart {
+  padding: 7px 25px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: #f8e8d0;
+  color: #291c0e;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  display: block;
+  margin: 35px auto 10px auto; 
+}
+
+.stock-low-open-cart:hover {
+  background-color: #e0d3b3;
+}
+
+/* ============================= */
+/* POPUP BELANJA STYLE (AUTOMISASI) */
+/* ============================= */
+#popup-belanja {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* lebih tinggi dari stok-low */
+}
+
+.belanja-light {
+  position: relative;
+  width: 400px;
+  background-color: #291c0e;
+  border-radius: 8px;
+  padding: 20px 30px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  color: #f8e8d0;
+  font-family: 'Poppins', sans-serif;
+}
+
+#close-belanja {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+}
+
+.belanja-title {
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.belanja-message {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.belanja-field {
+  margin-bottom: 20px;
+}
+
+.belanja-field label {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.belanja-toko-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.toko-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.toko-lain-input {
+  padding: 5px 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  flex: 1;
+}
+
+.belanja-btn-group {
+  display: flex;
+  justify-content: center;
+}
+
+.btn-belanja {
+  padding: 7px 25px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  background-color: #f8e8d0;
+  color: #291c0e;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-belanja:hover {
+  background-color: #e0d3b3;
+}

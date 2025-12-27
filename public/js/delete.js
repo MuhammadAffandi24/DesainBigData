@@ -2,73 +2,90 @@ document.addEventListener('DOMContentLoaded', function () {
   const deleteButtons = document.querySelectorAll('.universal-delete');
 
   deleteButtons.forEach(button => {
-    button.addEventListener('click', async () => {
-      const id    = button.dataset.id;
-      const url   = button.dataset.url;
-      const label = button.dataset.label;
+    button.addEventListener('click', async (e) => {
+      e.preventDefault();
+      
+      const id = button.dataset.id;
+      const url = button.dataset.url;
+      const label = button.dataset.label || 'Item';
+      const itemName = button.dataset.nama || '-';
+      const popupSelector = button.dataset.popupTarget || '#overlay-delete';
+      const overlay = document.querySelector(popupSelector);
+      if (!overlay) return;
 
-      // ambil overlay sesuai konteks (misalnya overlay-delete-tagihan)
-      const overlayId = button.closest('.overlay-delete')?.id || 'overlay-delete';
-      const overlay   = document.getElementById(overlayId);
+      const popupDeleteBtn = overlay.querySelector('.universal-delete');
+      const nameEl = overlay.querySelector('.item-name');
+      const closeBtn = overlay.querySelector('.btn-cancel, .material-symbols');
 
-      // ambil token dari localStorage
-      const token = localStorage.getItem('token');
-      if (!token) {
-        showNotif(label, 'Token tidak ditemukan, silakan login ulang.', false);
-        if (overlay) overlay.style.display = 'none';
+      const closeOverlay = () => { overlay.style.display = 'none'; };
+      if (closeBtn) closeBtn.onclick = closeOverlay;
+
+      // Jika tombol berasal dari list (bukan popup), tampilkan popup konfirmasi
+      if (!button.closest('.overlay-delete')) {
+        if (popupDeleteBtn) {
+          popupDeleteBtn.dataset.id = id;
+          popupDeleteBtn.dataset.url = url;
+          popupDeleteBtn.dataset.label = label;
+        }
+        if (nameEl) nameEl.textContent = itemName;
+        overlay.style.display = 'flex';
         return;
       }
 
+      // Tombol Delete popup ditekan
       try {
-        const response = await fetch(url, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Accept': 'application/json'
-          }
-        });
+        let headers = { 'Accept': 'application/json' };
+        let credentials = 'same-origin';
 
-        const result = await response.json();
-
-        if (response.ok) {
-          showNotif(label, result.message || `${label} berhasil dihapus`, true);
-          // contoh: reload halaman biar data update
-          setTimeout(() => window.location.reload(), 1000);
+        // Deteksi apakah URL route web (non-API)
+        if (!url.startsWith('/api/')) {
+          const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+          headers['X-CSRF-TOKEN'] = csrfToken;
+          headers['Content-Type'] = 'application/json';
         } else {
-          showNotif(label, result.message || `Gagal menghapus ${label}`, false);
+          // API route → pakai Bearer token
+          const token = localStorage.getItem('token');
+          if (!token) {
+            sessionStorage.setItem(
+              'notif',
+              JSON.stringify({ message: 'Token tidak ditemukan, silakan login ulang.', isSuccess: false })
+            );
+            closeOverlay();
+            window.location.reload();
+            return;
+          }
+          headers['Authorization'] = `Bearer ${token}`;
         }
 
-        if (overlay) overlay.style.display = 'none';
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: headers,
+          credentials: credentials
+        });
+
+        let result = {};
+        try { result = await response.json(); } catch {}
+
+        sessionStorage.setItem(
+          'notif',
+          JSON.stringify({
+            message: response.ok
+              ? (result.message || `${label} berhasil dihapus`)
+              : (result.message || `Gagal menghapus ${label}`),
+            isSuccess: response.ok
+          })
+        );
+
+        closeOverlay();
+        window.location.reload();
       } catch (error) {
-        console.error(error);
-        showNotif(label, 'Terjadi kesalahan saat menghapus.', false);
-        if (overlay) overlay.style.display = 'none';
+        sessionStorage.setItem(
+          'notif',
+          JSON.stringify({ message: 'Terjadi kesalahan saat menghapus.', isSuccess: false })
+        );
+        closeOverlay();
+        window.location.reload();
       }
     });
   });
-
-  // tombol close/cancel overlay (global)
-  const closeBtn  = document.getElementById('close-delete');
-  const cancelBtn = document.getElementById('cancel-delete');
-  const overlay   = document.querySelector('.overlay-delete');
-
-  if (closeBtn && overlay) closeBtn.onclick  = () => overlay.style.display = 'none';
-  if (cancelBtn && overlay) cancelBtn.onclick = () => overlay.style.display = 'none';
-
-  // fungsi notif sederhana
-  function showNotif(action, message, isSuccess) {
-    const notif = document.createElement('div');
-    notif.className = isSuccess ? 'notif-sukses' : 'notif-error';
-    notif.innerHTML = `
-      <span class="notif-title">${isSuccess ? 'Berhasil' : 'Gagal'}</span>
-      <p class="notif-message">${message}</p>
-      <img class="notif-close" src="/assets/material-symbols_close.svg" alt="Close">
-    `;
-
-    const container = document.getElementById('notif-container') || document.body;
-    container.appendChild(notif);
-
-    setTimeout(() => notif.remove(), 6000);
-    notif.querySelector('.notif-close').onclick = () => notif.remove();
-  }
 });

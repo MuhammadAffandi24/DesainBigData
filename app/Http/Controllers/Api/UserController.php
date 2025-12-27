@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserController extends Controller
@@ -27,7 +28,7 @@ class UserController extends Controller
         return response()->json(['message' => 'User registered', 'data' => $user], 201);
     }
 
-    // Login → keluarkan token Sanctum
+    // Login → keluarkan token Sanctum + redirect sesuai alur
     public function login(Request $request)
     {
         $request->validate([
@@ -38,29 +39,42 @@ class UserController extends Controller
         $user = User::where('username', $request->username)->first();
 
         if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Username atau password salah'], 401);
+            // kalau salah → balik ke form login dengan error
+            return redirect()->back()->with('error', 'Username atau password salah');
         }
 
+        // login user ke session Laravel
+        Auth::login($user);
+
+        // generate token Sanctum
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login berhasil',
-            'token'   => $token,
-            'user'    => [
-                // sesuaikan dengan PK kamu: 'id' atau 'user_id'
-                'user_id' => $user->user_id ?? $user->id,
-                'username'=> $user->username,
-                'role'    => $user->role,
-                'status'  => $user->status,
-            ]
-        ], 200);
+        // simpan token ke session supaya bisa diambil di Blade
+        session(['auth_token' => $token]);
+
+        // cek gudang (misalnya relasi warehouse)
+        if (!$user->warehouse) {
+            return redirect('/gudang/register');
+        }
+
+        // redirect sesuai role
+        if ($user->role === 'Superadmin') {
+            return redirect('/superadmin/home');
+        } elseif ($user->role === 'Admin') {
+            return redirect('/home');
+        } else {
+            return redirect('/user/home');
+        }
     }
 
     // Logout → hapus token yang sedang dipakai
     public function logout(Request $request)
     {
-        $request->user()->currentAccessToken()->delete();
-        return response()->json(['message' => 'Logged out']);
+        if ($request->user()) {
+            $request->user()->currentAccessToken()->delete();
+        }
+        Auth::logout();
+        return redirect('/login')->with('message', 'Logged out');
     }
 
     // (opsional) Lihat semua user

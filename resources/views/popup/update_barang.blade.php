@@ -1,44 +1,48 @@
-<!-- META & CSS -->
-<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
 
 <!-- Overlay -->
-<div id="add-product-overlay" class="popup-overlay" style="display: none;"></div>
+<div id="update-product-overlay" class="popup-overlay" style="display: none;"></div>
 
-<!-- Popup Tambah Barang -->
-<div id="add-product-popup" class="add-product-popup" style="display: none;">
+<!-- Popup Update Barang -->
+<div id="update-product-popup" class="add-product-popup" style="display: none;">
     <div class="add-product-header">
-        <h2 class="add-product-title">Tambah Barang</h2>
+        <h2 class="add-product-title">Update Barang</h2>
         <img
-            id="close-add-product"
-            class="material-symbols"
-            src="{{ asset('assets/material-symbols_close(2).svg') }}"
-            alt="Close"
-            onclick="closeAddProductPopup()"
-            style="cursor: pointer;"
+        id="close-delete"
+        class="material-symbols"
+        src="{{ asset('assets/material-symbols_close(2).svg') }}"
+        alt="Close"
+        onclick="closeUpdateProductPopup()"
+        style="cursor:pointer"
         />
+
     </div>
 
-    <div id="form-message" class="form-message"></div>
+    <div id="update-form-message" class="form-message"></div>
 
     <div class="add-product-content">
+        <!-- hidden id -->
+        <input type="hidden" id="update-barang-id">
+
         <div class="form-group">
             <label class="form-label">Gudang</label>
-            <select class="form-select" id="product-warehouse">
+            <select class="form-select" id="update-product-warehouse">
                 @foreach($userGudangs as $gudang)
-                    <option value="{{ $gudang->gudang_id }}">{{ $gudang->nama_gudang }}</option>
+                    <option value="{{ $gudang->gudang_id }}">
+                        {{ $gudang->nama_gudang }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
         <div class="form-group">
             <label class="form-label">Nama Barang</label>
-            <input type="text" class="form-input" id="product-name" name="name">
+            <input type="text" class="form-input" id="update-product-name">
         </div>
 
         <div class="form-group">
             <label class="form-label">Kategori</label>
-            <select class="form-select" id="product-category" name="category">
+            <select class="form-select" id="update-product-category">
                 <option value="">Pilih Kategori</option>
                 <option value="makanan">Makanan</option>
                 <option value="minuman">Minuman</option>
@@ -54,22 +58,22 @@
 
         <div class="form-group">
             <label class="form-label">Jumlah</label>
-            <input type="number" class="form-input" id="product-quantity" name="quantity" min="1">
+            <input type="number" class="form-input" id="update-product-quantity" min="1">
         </div>
 
         <div class="form-group">
             <label class="form-label">Harga</label>
-            <input type="number" class="form-input" id="product-price" name="price" min="0">
+            <input type="number" class="form-input" id="update-product-price" min="0">
         </div>
 
         <div class="form-group">
             <label class="form-label">Toko Pembelian</label>
-            <input type="text" class="form-input" id="product-store" name="store">
+            <input type="text" class="form-input" id="update-product-store">
         </div>
     </div>
 
     <div class="add-product-actions">
-        <button type="button" class="btn-cancel" onclick="closeAddProductPopup()">Batal</button>
-        <button type="button" class="btn-save" onclick="saveProduct()">Simpan</button>
+        <button type="button" class="btn-cancel" onclick="closeUpdateProductPopup()">Batal</button>
+        <button type="button" class="btn-save" onclick="updateProduct()">Update</button>
     </div>
 </div>
