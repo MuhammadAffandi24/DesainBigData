@@ -112,8 +112,10 @@
 
   {{-- Section 1: Menu Utama --}}
   <section class="banner">
-    <img src="{{ asset('assets/Dashboard.svg') }}" alt="Dashboard">
-    <h2>Dashboard</h2>
+    <a href="{{ route('dashboard') }}" class="menu-card" style="text-decoration: none; color: #E1D4C2;">
+      <img src="{{ asset('assets/Dashboard.svg') }}" alt="Dashboard">
+      <h2>Dashboard</h2>
+    </a>
   </section>
 
   <section class="menu-section">
