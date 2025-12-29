@@ -1,24 +1,56 @@
-*.log
-.DS_Store
+# ======================
+# ENV & SECRETS
+# ======================
 .env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
+.env.*
+auth.json
+
+# ======================
+# OS / EDITOR
+# ======================
+.DS_Store
+Thumbs.db
 /.idea
-/.nova
-/.phpunit.cache
 /.vscode
+/.fleet
 /.zed
-/auth.json
+/.nova
+
+# ======================
+# LOGS & CACHE
+# ======================
+*.log
+.phpunit.result.cache
+/.phpunit.cache
+
+# ======================
+# DEPENDENCIES
+# ======================
 /node_modules
+/vendor
+
+# ======================
+# BUILD / HOT RELOAD
+# ======================
 /public/build
 /public/hot
-/public/storage
+
+# ======================
+# STORAGE (IMPORTANT)
+# ======================
 /storage/*.key
 /storage/pail
-/vendor
+/storage/logs/*
+/storage/framework/*
+!/storage/framework/.gitignore
+
+# ======================
+# LARAVEL STORAGE LINK
+# ======================
+/public/storage
+
+# ======================
+# HOMESTEAD
+# ======================
 Homestead.json
 Homestead.yaml
-Thumbs.db
