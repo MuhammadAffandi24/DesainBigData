@@ -37,9 +37,9 @@ Route::prefix('gudang')->middleware('auth:sanctum')->group(function () {
 
 Route::prefix('daftar-belanja')->middleware('auth:sanctum')->group(function () {
     Route::get('/', [DaftarBelanjaController::class, 'index']);
-    Route::post('/', [DaftarBelanjaController::class, 'storeOrUpdate']);
-    Route::put('/{id}', [DaftarBelanjaController::class, 'storeOrUpdate']);
-    Route::delete('/{id}', [DaftarBelanjaController::class, 'destroy']); 
+    Route::post('/', [DaftarBelanjaController::class, 'store']);
+    Route::put('/{id}', [DaftarBelanjaController::class, 'update']);
+    Route::delete('/{id}', [DaftarBelanjaController::class, 'destroy']);
 });
 
 Route::prefix('tagihan')->middleware('auth:sanctum')->group(function () {

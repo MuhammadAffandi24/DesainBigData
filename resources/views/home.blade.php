@@ -211,8 +211,9 @@
                           class="btn light aksi-btn universal-delete"
                           data-id="{{ $b->barang_id }}"
                           data-nama="{{ $b->nama_barang }}"
-                          data-url="/api/barang/{{ $b->barang_id }}"
+                          data-url="/barang/{{ $b->barang_id }}"
                           data-label="Barang"
+                          data-popup-target="#overlay-delete"
                         >
                           Delete
                         </button>
@@ -308,7 +309,7 @@
                         class="btn light aksi-btn universal-delete"
                         data-id="{{ $db->barang_id }}"
                         data-nama="{{ $db->nama_barang }}"
-                        data-url="/api/daftar-belanja/{{ $db->barang_id }}"
+                        data-url="{{ route('daftar-belanja.destroy', $db->barang_id) }}"
                         data-label="Daftar Belanja"
                         data-popup-target="#overlay-delete-daftar"
                       >

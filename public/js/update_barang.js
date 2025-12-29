@@ -54,14 +54,14 @@ window.updateProduct = async function () {
   }
 
   try {
-    const token = localStorage.getItem('token');
-
-    const res = await fetch(`/api/barang/${id}`, {
+    const res = await fetch(`/barang/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'X-CSRF-TOKEN': document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute('content')
       },
       body: JSON.stringify(data)
     });

@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\DaftarBelanja;
 use Illuminate\Http\Request;
 
@@ -42,7 +41,12 @@ class DaftarBelanjaController extends Controller
             'toko_pembelian' => 'required|string',
         ]);
 
-        $belanja = DaftarBelanja::where('belanja_id', $id)->firstOrFail();
+        // Ganti firstOrFail() dengan first() + pengecekan
+        $belanja = DaftarBelanja::where('belanja_id', $id)->first();
+
+        if (!$belanja) {
+            return response()->json(['message' => 'Data tidak ditemukan'], 404);
+        }
 
         $belanja->update([
             'nama_barang'    => $request->nama_barang,
@@ -52,6 +56,7 @@ class DaftarBelanjaController extends Controller
 
         return response()->json(['message' => 'Daftar belanja berhasil diperbarui']);
     }
+
 
     public function destroy($id)
     {
@@ -65,5 +70,4 @@ class DaftarBelanjaController extends Controller
 
         return response()->json(['message' => 'Barang dihapus dari daftar belanja']);
     }
-
 }
