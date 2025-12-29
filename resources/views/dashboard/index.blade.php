@@ -338,7 +338,6 @@ function loadChart(filter = currentFilter){
     .then(data => {
 
       const out = data.line.pengeluaran.map(Number);
-      const inc = data.line.pemasukan.map(Number);
 
       /* ===== SUMMARY ===== */
       if (out.length) {
@@ -356,32 +355,23 @@ function loadChart(filter = currentFilter){
           data:{
             labels:data.line.labels,
             datasets:[
-              {
-                label:'Pembayaran Barang',
-                data:out,
-                borderColor:'#E1D4C2',
-                backgroundColor:'rgba(225,212,194,.35)',
-                borderWidth:2,
-                tension:.4,
-                fill:true
-              },
-              {
-                label:'Pembayaran tagihan',
-                data:inc,
-                borderColor:'#000',
-                backgroundColor:'rgba(0,0,0,.18)',
-                borderWidth:2,
-                tension:.4,
-                fill:true
-              }
-            ]
+  {
+    label:'Pembayaran Barang',
+    data:out,
+    borderColor:'#E1D4C2',
+    backgroundColor:'rgba(225,212,194,.35)',
+    borderWidth:2,
+    tension:.4,
+    fill:true
+  }
+]
+
           },
           options:{ responsive:true, maintainAspectRatio:false }
         });
       } else {
         lineChart.data.labels = data.line.labels;
         lineChart.data.datasets[0].data = out;
-        lineChart.data.datasets[1].data = inc;
         lineChart.update();
       }
 
