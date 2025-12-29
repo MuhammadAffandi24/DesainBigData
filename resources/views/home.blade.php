@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <title>STOKIFY - Home</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ asset('css/home.css') }}">
   <link rel="stylesheet" href="{{ asset('css/notif.css') }}">
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
-  
+
 <body class="home-page">
   <script>
   function toggleSidebar() {
@@ -69,7 +70,7 @@
         <img src="{{ asset('assets/close.svg') }}" alt="Close" class="logo-icon" onclick="toggleSidebar()">
       </a>
     </div>
-    
+
     <!-- Menu Sidebar -->
     <ul class="sidebar-menu">
       <li><a href="#" class="active">Home</a></li>
@@ -204,7 +205,7 @@
                           Update
                         </button>
 
-                        <!-- DELETE -->      
+                        <!-- DELETE -->
                         <button
                           type="button"
                           class="btn light aksi-btn universal-delete"
@@ -295,7 +296,7 @@
                           class="btn dark aksi-btn universal-update-belanja"
                           data-id="{{ $db->barang_id }}"
                           data-nama="{{ $db->nama_barang }}"
-                          data-stok="{{ $db->sisa_stok }}" 
+                          data-stok="{{ $db->sisa_stok }}"
                           data-toko="{{ $db->toko_pembelian }}"
                       >
                           Update

@@ -109,6 +109,30 @@ class BarangController extends Controller
             'showLowStockPopup'
         ));
     }
+    public function store(Request $request)
+    {
+    $request->validate([
+        'gudang_id'      => 'required|exists:gudang,gudang_id',
+        'nama_barang'    => 'required|string|max:100',
+        'kategori'       => 'required|string|max:50',
+        'jumlah_barang'  => 'required|integer|min:1',
+        'harga_barang'   => 'required|integer|min:1',
+        'toko_pembelian' => 'required|string|max:100',
+    ]);
+
+    Barang::create([
+        'gudang_id'      => $request->gudang_id,
+        'nama_barang'    => $request->nama_barang,
+        'kategori'       => $request->kategori,
+        'jumlah_barang'  => $request->jumlah_barang,
+        'harga_barang'   => $request->harga_barang,
+        'toko_pembelian' => $request->toko_pembelian,
+    ]);
+
+    return response()->json([
+        'message' => 'Barang berhasil ditambahkan'
+    ], 201);
+    }
 
     public function edit($id)
     {

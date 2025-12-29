@@ -57,21 +57,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
-      const token = localStorage.getItem('token'); // ambil token dari localStorage
-
-      const response = await fetch('/api/barang', {
+      const response = await fetch('/barang', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
-          'Authorization': `Bearer ${token}` // pakai Bearer token
+          'X-CSRF-TOKEN': document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute('content')
         },
         body: JSON.stringify(data)
       });
 
       // Cek dulu apakah response JSON valid
       let result;
-      try { result = await response.json(); } 
+      try { result = await response.json(); }
       catch { result = { message: response.statusText }; }
 
       showNotif(
