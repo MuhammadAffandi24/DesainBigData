@@ -15,6 +15,7 @@ use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DaftarBelanjaController;
+use App\Http\Controllers\TokoImageController;
 
 
 // Models Controllers
@@ -150,6 +151,14 @@ Route::get('/produk/{id}', function ($id) {
     return view('toko.detail', compact('barang'));
 })->name('produk.show');
 
+# ===============================
+# Kelola Gambar Toko & Produk
+# ===============================
+
+Route::post('/toko/image/upload', [TokoImageController::class, 'upload'])
+    ->name('toko.image.upload');
+Route::post('/toko/image/delete', [TokoImageController::class, 'delete'])
+    ->name('toko.image.delete');
 
 # ===============================
 # Logout

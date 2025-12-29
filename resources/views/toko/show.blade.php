@@ -5,6 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $nama_toko_asli }} - Daftar Produk</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/popup.css') }}">
+
+    <style>
+        /* STLE TOMBOL EDIT */
+        .banner-edit-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            
+            background-color: #E1D4C2; 
+            
+            color: #291C0E;
+            border: 2px solid #291C0E;
+
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 10;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Efek saat kursor diarahkan (Hover) */
+        .banner-edit-btn:hover {
+            background: #291C0E; /* Jadi Cokelat Tua */
+            color: #E1D4C2; /* Ikon jadi Cream */
+            transform: scale(1.1);
+        }
+    </style>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -54,21 +91,31 @@
             }
         @endphp
 
-        @if($banner_final)
-            <div class="shop-banner">
-                <img src="{{ asset($banner_final) }}" alt="{{ $nama_toko_asli }}">
-                <div class="banner-content">
-                    <h1>{{ $nama_toko_asli }}</h1>
-                    <p>Cabang Resmi STOKIFY</p> {{-- Alamat hardcode karena tidak ada di database --}}
+        <div style="position: relative;">
+
+            @if($banner_final)
+                <div class="shop-banner">
+                    <img src="{{ asset($banner_final) }}?v={{ time() }}" alt="{{ $nama_toko_asli }}">
+                    <div class="banner-content">
+                        <h1>{{ $nama_toko_asli }}</h1>
+                        <p>Cabang Resmi STOKIFY</p> {{-- Alamat hardcode karena tidak ada di database --}}
+                    </div>
                 </div>
-            </div>
-        @else
-            {{-- JIKA GAMBAR TIDAK ADA --}}
-            <div class="shop-banner-dark">
-                 <h1>{{ $nama_toko_asli }}</h1>
-                 <p>Silakan pilih barang kebutuhan Anda</p>
-            </div>
-        @endif
+            @else
+                {{-- JIKA GAMBAR TIDAK ADA --}}
+                <div class="shop-banner-dark">
+                    <h1>{{ $nama_toko_asli }}</h1>
+                     <p>Silakan pilih barang kebutuhan Anda</p>
+                </div>
+            @endif
+
+            {{-- TOMBOL EDIT --}}
+            <button onclick="openModal()" class="banner-edit-btn" title="Ubah Gambar Toko">
+                <i class="fas fa-pen"></i>
+                <span>Edit Gambar</span>
+            </button>
+
+        </div>
 
         {{-- FILTER BAR --}}
         <form action="{{ route('toko.show', urlencode($nama_toko_asli)) }}" method="GET">
@@ -137,5 +184,50 @@
             @endforelse
         </div>
     </div>
+
+    {{-- MODAL POPUP --}}
+    <div id="imageModal" class="popup-overlay" style="display: none;">
+        <div class="add-product-popup" style="width: 400px;">
+            <i class="fas fa-times add-product-close" onclick="closeModal()"></i>
+            <h2 class="add-product-title">Atur Gambar Toko</h2>
+            
+            <div class="add-product-content">
+                {{-- FORM UPLOAD --}}
+                <form action="{{ route('toko.image.upload') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="nama_toko" value="{{ $nama_toko_asli }}">
+                    <div class="form-group" style="display: block;">
+                        <label class="form-label" style="display: block; margin-bottom: 10px;">Pilih Gambar Baru:</label>
+                        <input type="file" name="image" class="form-input" required accept="image/*">
+                    </div>
+                    <div class="add-product-actions" style="margin-top: 20px;">
+                        <button type="button" class="btn-cancel" onclick="closeModal()">Batal</button>
+                        <button type="submit" class="btn-save">Simpan</button>
+                    </div>
+                </form>
+
+                {{-- TOMBOL HAPUS (Hanya muncul jika gambar ada) --}}
+                @if($banner_final)
+                    <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.2); margin: 20px 0;">
+                    <form action="{{ route('toko.image.delete') }}" method="POST" onsubmit="return confirm('Hapus gambar?');">
+                        @csrf
+                        <input type="hidden" name="nama_toko" value="{{ $nama_toko_asli }}">
+                        <button type="submit" style="width: 100%; background: #c12020; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">
+                            <i class="fas fa-trash"></i> Hapus Gambar
+                        </button>
+                    </form>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    {{-- SCRIPT --}}
+    <script>
+        function openModal() { document.getElementById('imageModal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('imageModal').style.display = 'none'; }
+        window.onclick = function(e) {
+            if (e.target == document.getElementById('imageModal')) closeModal();
+        }
+    </script>
 </body>
 </html>
