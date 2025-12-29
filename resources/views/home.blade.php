@@ -130,11 +130,11 @@
       <img src="{{ asset('assets/Kelola Barang.svg') }}" alt="Kelola Barang">
       <h3>Kelola Barang</h3>
     </a>
-    <div class="menu-card">
+    <a href="#daftar-belanja" class="menu-card" style="text-decoration: none; color: #E1D4C2;">
       <i class="fas fa-receipt fa-2x"></i>
-      <img src="{{ asset('assets/Kelola Tagihan.svg') }}" alt="Kelola Tagihan">
-      <h3>Kelola Tagihan</h3>
-    </div>
+      <img src="{{ asset('assets/Kelola Tagihan.svg') }}" alt="Kelola Belanja">
+      <h3>Kelola Belanja</h3>
+    </a>
   </section>
 
   {{-- Section 2: Manajemen Barang --}}
