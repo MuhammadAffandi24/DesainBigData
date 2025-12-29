@@ -107,7 +107,7 @@
 
                             if (!empty($prod_db)) {
                                 foreach ($exts as $ext) {
-                                    $p_check = 'assets/' . $nama_dasar . '.' . $ext;
+                                    $p_check = 'assets/' . $prod_dasar . '.' . $ext;
                                     if (file_exists(public_path($p_check))) {
                                         $prod_final = $p_check;
                                         break;
@@ -116,7 +116,7 @@
                             }
                         @endphp
 
-                        @if($final_path)
+                        @if($prod_final)
                             <img src="{{ asset($prod_final) }}" alt="{{ $item->nama_barang }}">
                         @else
                             {{-- Placeholder jika gambar produk hilang --}}
