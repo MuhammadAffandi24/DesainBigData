@@ -27,13 +27,16 @@
 
       <button
         type="button"
-        class="btn-delete universal-delete"
-        data-id=""
-        data-url=""
+        class="btn light aksi-btn delete-belanja"
+        data-id="{{ $db->belanja_id }}"   
+        data-nama="{{ $db->nama_barang }}"
+        data-url="{{ route('daftar-belanja.destroy', $db->belanja_id) }}"
         data-label="Daftar Belanja"
+        data-popup-target="#overlay-delete-daftar"
       >
         Delete
       </button>
+
     </div>
 
   </div>

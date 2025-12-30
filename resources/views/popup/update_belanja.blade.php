@@ -58,6 +58,16 @@
 
     <div class="add-product-actions">
         <button type="button" class="btn btn-cancel">Batal</button>
-        <button type="button" class="btn btn-save">Update</button>
+        <button
+            type="button"
+            class="btn dark aksi-btn universal-update-belanja"
+            data-id="{{ $db->belanja_id }}"
+            data-nama="{{ $db->nama_barang }}"
+            data-stok="{{ $db->sisa_stok }}"
+            data-toko="{{ $db->toko_pembelian }}"
+        >
+            Update
+        </button>
+
     </div>
 </div>

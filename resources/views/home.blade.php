@@ -442,6 +442,8 @@
 <script src="{{ asset('js/automisasibelanja.js') }}"></script>
 <script src="{{ asset('js/update_barang.js') }}"></script>
 <script src="{{ asset('js/update_belanja.js') }}"></script>
+<script src="{{ asset('js/delete_daftar_belanja_fix.js') }}"></script>
+
 
 </body>
 </html>
