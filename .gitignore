@@ -54,3 +54,6 @@ Thumbs.db
 # ======================
 Homestead.json
 Homestead.yaml
+
+/public/assets/*
+!/public/assets/.gitkeep
