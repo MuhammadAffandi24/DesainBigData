@@ -295,7 +295,7 @@
                       <button
                           type="button"
                           class="btn dark aksi-btn universal-update-belanja"
-                          data-id="{{ $db->barang_id }}"
+                          data-id="{{ $db->belanja_id }}"
                           data-nama="{{ $db->nama_barang }}"
                           data-stok="{{ $db->sisa_stok }}"
                           data-toko="{{ $db->toko_pembelian }}"
@@ -307,7 +307,7 @@
                       <button
                         type="button"
                         class="btn light aksi-btn universal-delete"
-                        data-id="{{ $db->barang_id }}"
+                        data-id="{{ $db->belanja_id }}"
                         data-nama="{{ $db->nama_barang }}"
                         data-url="{{ route('daftar-belanja.destroy', $db->barang_id) }}"
                         data-label="Daftar Belanja"
