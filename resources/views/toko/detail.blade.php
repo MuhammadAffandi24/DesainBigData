@@ -116,9 +116,19 @@
         <div class="product-image-section">
             {{-- GAMBAR --}}
             @php
-                $nama_file = $barang->gambar ?? null; 
-                $path = 'assets/' . $nama_file;
-                $gambar_siap = !empty($nama_file) && file_exists(public_path($path));
+                $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $barang->nama_barang);
+                $extensions = ['jpg','jpeg','png','webp'];
+                $gambar_siap = false;
+                $path = null;
+
+                foreach ($extensions as $ext) {
+                    $cek = 'assets/' . $cleanName . '.' . $ext;
+                        if (file_exists(public_path($cek))) {
+                        $path = $cek;
+                        $gambar_siap = true;
+                        break;
+                    }
+                }
             @endphp
 
             @if($gambar_siap)

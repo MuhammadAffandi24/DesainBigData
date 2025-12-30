@@ -70,43 +70,54 @@ class TokoImageController extends Controller
 
     // Upload Gambar Produk
     public function uploadProductImage(Request $request)
-    {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
-            'barang_id' => 'required'
-        ]);
+{
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        'barang_id' => 'required'
+    ]);
 
-        $barang = Barang::findOrFail($request->barang_id);
-        $file = $request->file('image');
-        
-        $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $barang->nama_barang);
-        $ext = $file->getClientOriginalExtension();
-        $newName = $cleanName . '.' . $ext;
-        $destinationPath = public_path('assets');
+    $barang = Barang::findOrFail($request->barang_id);
+    $file = $request->file('image');
 
-        $oldFile = $destinationPath . '/' . $barang->gambar;
-        if (!empty($barang->gambar) && File::exists($oldFile)) {
+    // nama file dari nama barang
+    $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $barang->nama_barang);
+    $ext = $file->getClientOriginalExtension();
+    $newName = $cleanName . '.' . $ext;
+
+    $destinationPath = public_path('assets');
+
+    // hapus file lama (SEMUA ekstensi)
+    foreach (['jpg','jpeg','png','webp'] as $e) {
+        $oldFile = $destinationPath . '/' . $cleanName . '.' . $e;
+        if (File::exists($oldFile)) {
             File::delete($oldFile);
         }
-
-        $file->move($destinationPath, $newName);
-        $barang->update(['gambar' => $newName]);
-
-        return back()->with('success', 'Gambar produk berhasil diperbarui!');
     }
+
+    // simpan file baru
+    $file->move($destinationPath, $newName);
+
+    // ⛔ TIDAK ADA UPDATE DATABASE
+
+    return back()->with('success', 'Gambar produk berhasil diperbarui!');
+}
 
     // Hapus Gambar Produk
     public function deleteProductImage(Request $request)
-    {
-        $barang = Barang::findOrFail($request->barang_id);
-        $destinationPath = public_path('assets');
-        
-        $file = $destinationPath . '/' . $barang->gambar;
+{
+    $barang = Barang::findOrFail($request->barang_id);
+    $destinationPath = public_path('assets');
+
+    $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $barang->nama_barang);
+
+    foreach (['jpg','jpeg','png','webp'] as $e) {
+        $file = $destinationPath . '/' . $cleanName . '.' . $e;
         if (File::exists($file)) {
             File::delete($file);
         }
-
-        $barang->update(['gambar' => null]);
-        return back()->with('success', 'Gambar produk berhasil dihapus.');
     }
+
+    return back()->with('success', 'Gambar produk berhasil dihapus.');
+}
+
 }

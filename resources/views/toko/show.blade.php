@@ -147,21 +147,18 @@
                 <a href="{{ route('produk.show', $item->barang_id) }}" class="product-card">
                     <div class="product-image">
                         @php
-                            // Cek Gambar Produk
-                            $prod_db = $item->gambar;
-                            $prod_dasar = pathinfo($prod_db ?? '', PATHINFO_FILENAME);
+                            $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $item->nama_barang);
                             $prod_final = null;
 
-                            if (!empty($prod_db)) {
-                                foreach ($exts as $ext) {
-                                    $p_check = 'assets/' . $prod_dasar . '.' . $ext;
-                                    if (file_exists(public_path($p_check))) {
-                                        $prod_final = $p_check;
-                                        break;
-                                    }
+                            foreach ($exts as $ext) {
+                                $cek = 'assets/' . $cleanName . '.' . $ext;
+                                if (file_exists(public_path($cek))) {
+                                $prod_final = $cek;
+                                break;
                                 }
                             }
                         @endphp
+
 
                         @if($prod_final)
                             <img src="{{ asset($prod_final) }}" alt="{{ $item->nama_barang }}">
