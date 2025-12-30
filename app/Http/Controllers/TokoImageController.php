@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use App\Models\Barang;
 
 class TokoImageController extends Controller
 {
-    // LOGIKA UPLOAD & RENAME OTOMATIS
+    // ==============================
+    // TOKO
+    // ==============================
+
+    // Upload & Rename Nama Toko
     public function upload(Request $request)
     {
         $request->validate([
@@ -35,7 +40,7 @@ class TokoImageController extends Controller
         return back()->with('success', 'Gambar toko berhasil diperbarui!');
     }
 
-    // LOGIKA HAPUS GAMBAR
+    // Hapus Gambar Toko
     public function delete(Request $request)
     {
         $namaToko = $request->nama_toko;
@@ -57,5 +62,51 @@ class TokoImageController extends Controller
         } else {
             return back()->with('error', 'Gambar tidak ditemukan.');
         }
+    }
+
+    // ==============================
+    // PRODUK
+    // ==============================
+
+    // Upload Gambar Produk
+    public function uploadProductImage(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'barang_id' => 'required'
+        ]);
+
+        $barang = Barang::findOrFail($request->barang_id);
+        $file = $request->file('image');
+        
+        $cleanName = preg_replace('/[^A-Za-z0-9]/', '_', $barang->nama_barang);
+        $ext = $file->getClientOriginalExtension();
+        $newName = $cleanName . '.' . $ext;
+        $destinationPath = public_path('assets');
+
+        $oldFile = $destinationPath . '/' . $barang->gambar;
+        if (!empty($barang->gambar) && File::exists($oldFile)) {
+            File::delete($oldFile);
+        }
+
+        $file->move($destinationPath, $newName);
+        $barang->update(['gambar' => $newName]);
+
+        return back()->with('success', 'Gambar produk berhasil diperbarui!');
+    }
+
+    // Hapus Gambar Produk
+    public function deleteProductImage(Request $request)
+    {
+        $barang = Barang::findOrFail($request->barang_id);
+        $destinationPath = public_path('assets');
+        
+        $file = $destinationPath . '/' . $barang->gambar;
+        if (File::exists($file)) {
+            File::delete($file);
+        }
+
+        $barang->update(['gambar' => null]);
+        return back()->with('success', 'Gambar produk berhasil dihapus.');
     }
 }

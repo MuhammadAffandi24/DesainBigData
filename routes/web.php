@@ -149,7 +149,10 @@ Route::post('/toko/image/upload', [TokoImageController::class, 'upload'])
     ->name('toko.image.upload');
 Route::post('/toko/image/delete', [TokoImageController::class, 'delete'])
     ->name('toko.image.delete');
-
+Route::post('/produk/image/upload', [TokoImageController::class, 'uploadProductImage'])
+    ->name('produk.image.upload');
+Route::post('/produk/image/delete', [TokoImageController::class, 'deleteProductImage'])
+    ->name('produk.image.delete');
 # ===============================
 # Logout
 # ===============================
