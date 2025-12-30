@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const deleteButtons = document.querySelectorAll('.universal-delete');
+  const deleteButtons = document.querySelectorAll('.delete-belanja');
 
   deleteButtons.forEach(button => {
     button.addEventListener('click', async (e) => {
@@ -13,14 +13,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const overlay = document.querySelector(popupSelector);
       if (!overlay) return;
 
-      const popupDeleteBtn = overlay.querySelector('.universal-delete');
+      const popupDeleteBtn = overlay.querySelector('.delete-belanja');
       const nameEl = overlay.querySelector('.item-name');
       const closeBtn = overlay.querySelector('.btn-cancel, .material-symbols');
 
-      const closeOverlay = () => {
-        overlay.style.display = 'none';
-      };
-
+      const closeOverlay = () => overlay.style.display = 'none';
       if (closeBtn) closeBtn.onclick = closeOverlay;
 
       if (!button.closest('.overlay-delete')) {
@@ -29,17 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
           popupDeleteBtn.dataset.url = url;
           popupDeleteBtn.dataset.label = label;
         }
-
         if (nameEl) nameEl.textContent = itemName;
         overlay.style.display = 'flex';
         return;
       }
 
-
       try {
-        const csrfToken = document
-          .querySelector('meta[name="csrf-token"]')
-          .getAttribute('content');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
         const response = await fetch(url, {
           method: 'DELETE',
@@ -51,32 +44,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         let result = {};
-        try {
-          result = await response.json();
-        } catch {}
+        try { result = await response.json(); } catch {}
 
-        sessionStorage.setItem(
-          'notif',
-          JSON.stringify({
-            message: response.ok
-              ? (result.message || `${label} berhasil dihapus`)
-              : (result.message || `Gagal menghapus ${label}`),
-            isSuccess: response.ok
-          })
-        );
+        sessionStorage.setItem('notif', JSON.stringify({
+          message: response.ok ? (result.message || `${label} berhasil dihapus`) : (result.message || `Gagal menghapus ${label}`),
+          isSuccess: response.ok
+        }));
 
         closeOverlay();
         window.location.reload();
 
       } catch (error) {
-        sessionStorage.setItem(
-          'notif',
-          JSON.stringify({
-            message: 'Terjadi kesalahan saat menghapus.',
-            isSuccess: false
-          })
-        );
-
+        sessionStorage.setItem('notif', JSON.stringify({
+          message: error.message || 'Terjadi kesalahan saat menghapus.',
+          isSuccess: false
+        }));
         closeOverlay();
         window.location.reload();
       }

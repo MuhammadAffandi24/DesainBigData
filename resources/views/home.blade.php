@@ -130,11 +130,11 @@
       <img src="{{ asset('assets/Kelola Barang.svg') }}" alt="Kelola Barang">
       <h3>Kelola Barang</h3>
     </a>
-    <div class="menu-card">
+    <a href="#daftar-belanja" class="menu-card" style="text-decoration: none; color: #E1D4C2;">
       <i class="fas fa-receipt fa-2x"></i>
-      <img src="{{ asset('assets/Kelola Tagihan.svg') }}" alt="Kelola Tagihan">
-      <h3>Kelola Tagihan</h3>
-    </div>
+      <img src="{{ asset('assets/Kelola Tagihan.svg') }}" alt="Kelola Belanja">
+      <h3>Kelola Belanja</h3>
+    </a>
   </section>
 
   {{-- Section 2: Manajemen Barang --}}
@@ -211,8 +211,9 @@
                           class="btn light aksi-btn universal-delete"
                           data-id="{{ $b->barang_id }}"
                           data-nama="{{ $b->nama_barang }}"
-                          data-url="/api/barang/{{ $b->barang_id }}"
+                          data-url="/barang/{{ $b->barang_id }}"
                           data-label="Barang"
+                          data-popup-target="#overlay-delete"
                         >
                           Delete
                         </button>
@@ -308,7 +309,7 @@
                         class="btn light aksi-btn universal-delete"
                         data-id="{{ $db->barang_id }}"
                         data-nama="{{ $db->nama_barang }}"
-                        data-url="/api/daftar-belanja/{{ $db->barang_id }}"
+                        data-url="{{ route('daftar-belanja.destroy', $db->barang_id) }}"
                         data-label="Daftar Belanja"
                         data-popup-target="#overlay-delete-daftar"
                       >

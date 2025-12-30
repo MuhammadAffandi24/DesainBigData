@@ -140,7 +140,7 @@ class BarangController extends Controller
         return view('barang.edit', compact('barang'));
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Barang $barang)
     {
         $request->validate([
             'nama_barang' => 'required',
@@ -150,8 +150,6 @@ class BarangController extends Controller
             'toko_pembelian' => 'required'
         ]);
 
-        $barang = Barang::findOrFail($id);
-
         $barang->update([
             'nama_barang' => $request->nama_barang,
             'kategori' => $request->kategori,
@@ -160,12 +158,13 @@ class BarangController extends Controller
             'toko_pembelian' => $request->toko_pembelian
         ]);
 
-        return redirect()->route('home')->with('success', 'Barang berhasil diperbarui!');
+        return response()->json(['message' => 'Barang berhasil diperbarui'], 200);
     }
 
-    public function destroy($id)
+    public function destroy(Barang $barang)
     {
-        Barang::findOrFail($id)->delete();
-        return redirect()->route('home')->with('success', 'Barang berhasil dihapus!');
+        $barang->delete();
+
+        return response()->json(['message' => 'Barang berhasil dihapus'], 200);
     }
 }

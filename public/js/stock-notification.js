@@ -81,24 +81,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
 
-            const token = localStorage.getItem('token');
-            if (!token) {
-                showNotif('Belanja', 'Tidak ada token. Login API dulu.', false);
-                return;
-            }
-
             try {
-                const response = await fetch('/api/daftar-belanja', {
+                const response = await fetch('/daftar-belanja', {
                     method: 'POST',
                     headers: {
-                        'Authorization': 'Bearer ' + token,
                         'Content-Type': 'application/json',
-                        'Accept': 'application/json'
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute('content')
                     },
                     body: JSON.stringify({
                         barang_id: productId,
                         nama_barang: productName,
-                        sisa_stok: productStock || 0, 
+                        sisa_stok: productStock || 0,
                         toko_pembelian: toko
                     })
                 });
@@ -109,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     showNotif('Belanja', result.message || 'Berhasil ditambahkan', true);
                     popup.style.display = 'none';
 
-                    // reload + scroll ke section daftar belanja
                     window.location.hash = '#daftar-belanja';
                     location.reload();
                 } else {

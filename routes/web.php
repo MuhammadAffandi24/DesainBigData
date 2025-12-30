@@ -14,6 +14,7 @@ use App\Http\Controllers\SuperadminUserController;
 use App\Http\Controllers\SuperadminDashboardController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DaftarBelanjaController;
 use App\Http\Controllers\TokoImageController;
 
 
@@ -79,6 +80,15 @@ Route::middleware('auth')->group(function () {
         ->name('home');
 
     Route::resource('barang', BarangController::class);
+
+    Route::post('/daftar-belanja', [DaftarBelanjaController::class, 'store'])
+        ->name('daftar-belanja.store');
+
+    Route::put('/daftar-belanja/{id}', [DaftarBelanjaController::class, 'update'])
+        ->name('daftar-belanja.update');
+
+    Route::delete('/daftar-belanja/{id}', [DaftarBelanjaController::class, 'destroy'])
+        ->name('daftar-belanja.destroy');
 });
 
 # ===============================
@@ -116,12 +126,12 @@ Route::get('/cek-toko', function () {
 # ===============================
 Route::get('/cek-toko/{nama_toko}', function ($nama_toko, Request $request) {
     $nama_toko_asli = urldecode($nama_toko);
-    
+
     $categories = Barang::where('toko_pembelian', $nama_toko_asli)
         ->select('kategori')
         ->distinct()
         ->pluck('kategori');
-    
+
     $query = Barang::where('toko_pembelian', $nama_toko_asli);
 
     if ($request->has('kategori') && $request->filled('kategori')) {

@@ -2,14 +2,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const btn = document.getElementById('submit-belanja');
     if (!btn) return;
 
-    // klik tombol tambah ke daftar belanja
     btn.addEventListener('click', async () => {
         const popup = document.getElementById('popup-belanja');
         if (!popup) return;
 
         const productId = popup.dataset.productId;
         const productName = popup.dataset.productName;
-        const productStock = popup.dataset.productStock; // ambil stok dari dataset
+        const productStock = popup.dataset.productStock;
 
         if (!productId || !productName) {
             showNotif('Belanja', 'Data barang tidak ditemukan', false);
@@ -18,7 +17,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const tokoRadio = document.querySelector('input[name="toko"]:checked');
         const tokoCustom = document.querySelector('input[name="toko_custom"]');
-
         const toko = tokoRadio?.value || tokoCustom?.value || '';
 
         if (!toko) {
@@ -26,24 +24,22 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        const token = localStorage.getItem('token');
-        if (!token) {
-            showNotif('Belanja', 'Tidak ada token. Login API dulu.', false);
-            return;
-        }
-
         try {
-            const response = await fetch('/api/daftar-belanja', {
+            const csrfToken = document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute('content');
+
+            const response = await fetch('/daftar-belanja', {
                 method: 'POST',
                 headers: {
-                    'Authorization': 'Bearer ' + token,
+                    'X-CSRF-TOKEN': csrfToken,
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
                 body: JSON.stringify({
                     barang_id: productId,
                     nama_barang: productName,
-                    sisa_stok: productStock || 0, // kirim stok, default 0
+                    sisa_stok: productStock || 0,
                     toko_pembelian: toko
                 })
             });
@@ -53,8 +49,6 @@ document.addEventListener('DOMContentLoaded', function () {
             if (response.ok) {
                 showNotif('Belanja', result.message || 'Berhasil ditambahkan', true);
                 popup.style.display = 'none';
-
-                // reload + scroll ke section daftar belanja
                 window.location.hash = '#daftar-belanja';
                 location.reload();
             } else {
@@ -66,7 +60,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
-    // tombol close popup belanja
     const closeBtn = document.getElementById('close-belanja');
     if (closeBtn) {
         closeBtn.addEventListener('click', () => {
@@ -74,7 +67,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // klik di luar popup
     window.addEventListener('click', function (e) {
         const belanjaPopup = document.getElementById('popup-belanja');
         if (belanjaPopup && e.target === belanjaPopup) {

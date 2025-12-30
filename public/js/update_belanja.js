@@ -22,7 +22,7 @@ window.closeUpdateBelanjaPopup = function () {
 };
 
 /* ===============================
-   UPDATE BELANJA
+   UPDATE BELANJA (WEB)
 ================================ */
 window.updateBelanja = async function () {
   const id = document.getElementById('update-cart-id').value;
@@ -39,7 +39,7 @@ window.updateBelanja = async function () {
 
   // Validasi client
   if (Object.values(data).some(v => !v)) {
-    showUpdateBelanjaMessage('⚠️ Semua field wajib diisi sebelum update!', 'error');
+    showUpdateBelanjaMessage('⚠️ Semua field wajib diisi!', 'error');
     return;
   }
   if (data.sisa_stok < 0) {
@@ -48,48 +48,55 @@ window.updateBelanja = async function () {
   }
 
   try {
-    const token = localStorage.getItem('token');
+    const csrfToken = document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute('content');
 
-    const res = await fetch(`/api/daftar-belanja/${id}`, {
-      method: 'PUT', // sesuai route
+    const res = await fetch(`/daftar-belanja/${id}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        'X-CSRF-TOKEN': csrfToken
       },
       body: JSON.stringify(data)
     });
 
-    const result = await res.json();
+    const result = await res.json().catch(() => ({}));
 
     if (!res.ok) {
-      if (result.errors) {
-        const messages = Object.values(result.errors).flat().join(', ');
-        showUpdateBelanjaMessage(messages, 'error');
-      } else {
-        showUpdateBelanjaMessage(result.message || 'Update gagal', 'error');
-      }
+      showUpdateBelanjaMessage(
+        result.message || 'Update daftar belanja gagal',
+        'error'
+      );
       return;
     }
 
-    // ✅ Success → simpan pesan ke localStorage, tampilkan notif setelah reload
-    localStorage.setItem('updateBelanjaSuccess', result.message || 'Daftar belanja berhasil diperbarui!');
+    // ✅ Success
+    sessionStorage.setItem(
+      'notif',
+      JSON.stringify({
+        message: result.message || 'Daftar belanja berhasil diperbarui',
+        isSuccess: true
+      })
+    );
+
     closeUpdateBelanjaPopup();
     location.reload();
 
   } catch (err) {
     console.error(err);
-    showUpdateBelanjaMessage(err.message || 'Terjadi kesalahan', 'error');
+    showUpdateBelanjaMessage('Terjadi kesalahan sistem', 'error');
   }
 };
 
 /* ===============================
-   MESSAGE (khusus error)
+   MESSAGE
 ================================ */
 function showUpdateBelanjaMessage(msg, type) {
   const el = document.getElementById('update-cart-message');
   if (!el) return;
-  el.style.display = 'block';
+  el.style.display = msg ? 'block' : 'none';
   el.innerText = msg;
   el.className = `form-message ${type}`;
 }
@@ -115,14 +122,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // tombol update & batal
-  document.querySelector('#update-cart-popup .btn-save').addEventListener('click', updateBelanja);
-  document.querySelector('#update-cart-popup .btn-cancel').addEventListener('click', closeUpdateBelanjaPopup);
+  document
+    .querySelector('#update-cart-popup .btn-save')
+    ?.addEventListener('click', updateBelanja);
 
-  // 🔔 Cek apakah ada pesan sukses setelah reload
-  const successMsg = localStorage.getItem('updateBelanjaSuccess');
-  if (successMsg) {
-    showNotif('Update Belanja', successMsg, true);
-    localStorage.removeItem('updateBelanjaSuccess');
-  }
+  document
+    .querySelector('#update-cart-popup .btn-cancel')
+    ?.addEventListener('click', closeUpdateBelanjaPopup);
 });
